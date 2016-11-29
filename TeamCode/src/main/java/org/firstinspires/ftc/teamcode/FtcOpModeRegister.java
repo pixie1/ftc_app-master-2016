@@ -68,11 +68,9 @@ public class  FtcOpModeRegister implements OpModeRegister {
     manager.register("MasterThroneTeleop", MasterThroneTeleop.class);
     manager.register("JoystickLocationTest", JoystickLocationTest.class);
     manager.register("MasterThroneTeleopNoJoy", MasterThroneTeleopNoJoy.class);
-    manager.register("MasterThroneAutoBallBlue", MasterThroneAutoBallBlue.class);
-    manager.register("MasterThroneAutoRampBlue", MasterThroneAutoRampBlue.class);
+    manager.register("MasterThroneAutoBall", MasterThroneAutoBall.class);
+    manager.register("MasterThroneAutoRamp", MasterThroneAutoRamp.class);
     manager.register("AutonomousSimple", AutonomousSimple.class);
-    manager.register("Test", autonomousTest.class);
-
     //manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
     //manager.register("ColorSensorDriver", ColorSensorDriver.class);
 
