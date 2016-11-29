@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
         import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
         import com.qualcomm.robotcore.hardware.DcMotor;
         import com.qualcomm.robotcore.hardware.Servo;
+        import com.qualcomm.robotcore.util.ElapsedTime;
         import com.qualcomm.robotcore.robocol.TelemetryMessage;
         import com.qualcomm.robotcore.util.Range;
 /**
@@ -78,30 +79,6 @@ public class MasterThroneTeleop extends OpMode {
             buttonBash.setPosition(0);
         }
 
-//        if (gamepad2.a) {
-//            launchL.setPower(1);
-//            launchR.setPower(-1);
-//            //pushl.setPosition(0.47);
-//            //pushr.setPosition(0.63);
-//        } if (gamepad2.y) {
-//            launchL.setPower(0);
-//            launchR.setPower(0);
-//            //pushl.setPosition(0.9); //DEPLOY CHANGES DANGIT
-//            //pushr.setPosition(0.2);
-//        }
-
-//        if (gamepad2.a) {
-//            launchL.setPower(1);
-//            launchR.setPower(-1);
-//            //pushl.setPosition(0.47);
-//            //pushr.setPosition(0.63);
-//        } else if (gamepad2.y) {
-//            launchL.setPower(0);
-//            launchR.setPower(0);
-//            //pushl.setPosition(0.9); //DEPLOY CHANGES DANGIT
-//            //pushr.setPosition(0.2);
-//        }
-
         if (gamepad2.x) {
             art.setPosition(.9);
         } else if (gamepad2.b) {
@@ -117,12 +94,39 @@ public class MasterThroneTeleop extends OpMode {
         }
 
         if (gamepad2.a) {
-            pushl.setPosition(0.05);//0.47
-            pushr.setPosition(0.95);
-        } if (gamepad2.y) {
-            pushl.setPosition(0.95); //DEPLOY CHANGES DANGIT
-            pushr.setPosition(0.05);
+            pushl.setPosition(.9);//0.47
+            pushr.setPosition(.1);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+            pushl.setPosition(.1);
+            pushr.setPosition(.9);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+            pushl.setPosition(.5);
+            pushr.setPosition(.5);
         }
+        //} if (gamepad2.y) {
+        //    pushl.setPosition(0); //DEPLOY CHANGES DANGIT
+        //    pushr.setPosition(1);
+
+        //}
+
+//        if (gamepad2.a) {
+//            launchL.setPower(1);
+//            launchR.setPower(-1);
+//            //pushl.setPosition(0.47);
+//            //pushr.setPosition(0.63);
+//        } else if (gamepad2.y) {
+//            launchL.setPower(0);
+//            launchR.setPower(0);
+//            //pushl.setPosition(0.9); //DEPLOY CHANGES DANGIT
+//            //pushr.setPosition(0.2);
+//        }
+
     }
 }
 
