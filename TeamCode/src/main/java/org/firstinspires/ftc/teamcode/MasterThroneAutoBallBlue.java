@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * A simple test of a pair of motors
@@ -40,6 +41,7 @@ public class MasterThroneAutoBallBlue extends LinearOpMode {
         motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         sensorGyro.calibrate();
         while (sensorGyro.isCalibrating()) {
             telemetry.addData("gyro sensor is calibrating", "0");

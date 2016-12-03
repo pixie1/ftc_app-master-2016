@@ -1,13 +1,11 @@
-
-package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+ package org.firstinspires.ftc.teamcode;
+        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
         import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
         import com.qualcomm.robotcore.hardware.DcMotor;
         import com.qualcomm.robotcore.hardware.Servo;
         import com.qualcomm.robotcore.util.ElapsedTime;
-        import com.qualcomm.robotcore.robocol.TelemetryMessage;
-        import com.qualcomm.robotcore.util.Range;
-/**
+
+ /**
  * Created by Karine on 10/27/2015.
  */
 @TeleOp
@@ -20,10 +18,8 @@ public class MasterThroneTeleop extends OpMode {
     DcMotor launchR;
     DcMotor launchL;
 
-    Servo art;
-    Servo buttonBash;
-    Servo pushl;
-    Servo pushr;
+    Servo catcher;
+    Servo buttonBasher;
 
     /**
      * Constructor
@@ -40,21 +36,23 @@ public class MasterThroneTeleop extends OpMode {
         motorBackLeft = hardwareMap.dcMotor.get("motor_4");
         launchR = hardwareMap.dcMotor.get("motor_5");
         launchL = hardwareMap.dcMotor.get("motor_6");
-        art = hardwareMap.servo.get("servo_1");
-        buttonBash = hardwareMap.servo.get("servo_2");
-        pushl = hardwareMap.servo.get("servo_3");
-        pushr = hardwareMap.servo.get("servo_4");
+        catcher = hardwareMap.servo.get("servo_1");
+        buttonBasher = hardwareMap.servo.get("servo_2");
+       // pushl = hardwareMap.servo.get("servo_3");
+        //pushr = hardwareMap.servo.get("servo_4");
 
         motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        launchL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        launchR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        art.setPosition(.5);
-        pushr.setPosition(.5);
-        pushl.setPosition(.5);
+        catcher.setPosition(0);
+       // pushr.setPosition(.5);
+       // pushl.setPosition(.5);
     }
-
+     final double ARTT = 0.3;
     @Override
     public void loop() {
         //Control method #2 Joysticks
@@ -66,48 +64,32 @@ public class MasterThroneTeleop extends OpMode {
         motorBackLeft.setPower(m);
 
         if (gamepad2.x) {
-            art.setPosition(.9);
+            catcher.setPosition(1);
         } else if (gamepad2.b) {
-            art.setPosition(.1);
-        } else {
-            art.setPosition(.5);
+            catcher.setPosition(0);
         }
-
         if (gamepad2.dpad_up) { //Button Basher
-            buttonBash.setPosition(0.75);
+            buttonBasher.setPosition(1);
         } if (gamepad2.dpad_down) {
-            buttonBash.setPosition(0);
-        }
-
-        if (gamepad2.x) {
-            art.setPosition(.9);
-        } else if (gamepad2.b) {
-            art.setPosition(.1);
-        } else {
-            art.setPosition(.5);
-        }
-
-        if (gamepad2.dpad_up) { //Button Basher
-            buttonBash.setPosition(0.75);
-        } if (gamepad2.dpad_down) {
-            buttonBash.setPosition(0);
+            buttonBasher.setPosition(0);
         }
 
         if (gamepad2.a) {
-            pushl.setPosition(.9);//0.47
-            pushr.setPosition(.1);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-            }
-            pushl.setPosition(.1);
-            pushr.setPosition(.9);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-            }
-            pushl.setPosition(.5);
-            pushr.setPosition(.5);
+            ElapsedTime flingerCounter = new ElapsedTime();
+            launchR.setPower(1); // prep
+            launchL.setPower(-1);
+            flingerCounter.reset();
+            while (flingerCounter.time() < ARTT/2){}
+            launchL.setPower(1); //hit ball
+            launchR.setPower(-1);
+            flingerCounter.reset();
+            while (flingerCounter.time() < ARTT){}
+            launchR.setPower(1); // return
+            launchL.setPower(-1);
+            flingerCounter.reset();
+            while (flingerCounter.time() < ARTT/2){}
+            launchL.setPower(0);
+            launchR.setPower(0);
         }
         //} if (gamepad2.y) {
         //    pushl.setPosition(0); //DEPLOY CHANGES DANGIT
@@ -129,4 +111,3 @@ public class MasterThroneTeleop extends OpMode {
 
     }
 }
-
