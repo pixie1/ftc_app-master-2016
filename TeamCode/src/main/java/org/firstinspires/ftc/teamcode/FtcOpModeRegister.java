@@ -66,10 +66,13 @@ public class  FtcOpModeRegister implements OpModeRegister {
    // manager.register ("PushBotManual", PushBotManual.class);
    // manager.register("MasterLinearAutonomous", MasterLinearAutonomous.class);
     manager.register("MasterThroneTeleop", MasterThroneTeleop.class);
+      manager.register("MasterThroneTeleopNew", MasterThroneTeleopNew.class);
     manager.register("JoystickLocationTest", JoystickLocationTest.class);
     manager.register("MasterThroneTeleopNoJoy", MasterThroneTeleopNoJoy.class);
     manager.register("MasterThroneAutoBallBlue", MasterThroneAutoBallBlue.class);
     manager.register("MasterThroneAutoRampBlue", MasterThroneAutoRampBlue.class);
+    manager.register("MasterThroneAutoBallBlue", MasterParkOnCenterAutoBlue.class);
+    manager.register("MasterParkOnCenterAutoRed", MasterParkOnCenterAutoRed.class);
     manager.register("AutonomousSimple", AutonomousSimple.class);
     manager.register("Test", autonomousTest.class);
 

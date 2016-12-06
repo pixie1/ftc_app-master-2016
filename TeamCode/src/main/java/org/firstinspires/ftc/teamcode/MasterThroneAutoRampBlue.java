@@ -75,7 +75,7 @@ public class MasterThroneAutoRampBlue extends LinearOpMode {
         encoderMoveUtil.turnGyro(80,0.25); //face ramp
         encoderMoveUtil.forward(60,0.3); //get on ramp
         //Hit balls
-        catcher.setPosition(.9);
+        catcher.setPosition(.5);
         ElapsedTime flingerCounter = new ElapsedTime();
         launchR.setPower(1); // prep
         launchL.setPower(-1);

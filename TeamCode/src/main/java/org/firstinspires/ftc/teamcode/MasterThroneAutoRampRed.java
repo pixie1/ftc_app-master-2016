@@ -53,7 +53,7 @@ public class MasterThroneAutoRampRed extends LinearOpMode {
         launchL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         launchR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        catcher.setPosition(1);
+        catcher.setPosition(0);
         buttonbash.setPosition(0.75);
 
         sensorGyro.calibrate();
@@ -73,24 +73,24 @@ public class MasterThroneAutoRampRed extends LinearOpMode {
         encoderMoveUtil.turnGyro(-40,0.25); //turn parrallel to ramp
         encoderMoveUtil.forward(70,0.25); //position near center of ramp
         encoderMoveUtil.turnGyro(-80,0.25); //face ramp
-        encoderMoveUtil.forward(60,0.3); //get on ramp
+        encoderMoveUtil.forward(40,0.15); //get on ramp
         //Hit balls
-        catcher.setPosition(.9);
-        ElapsedTime flingerCounter = new ElapsedTime();
-        launchR.setPower(1); // prep
-        launchL.setPower(-1);
-        flingerCounter.reset();
-        while (flingerCounter.time() < ARTT/2){}
-        launchL.setPower(1); //hit ball
-        launchR.setPower(-1);
-        flingerCounter.reset();
-        while (flingerCounter.time() < ARTT){}
-        launchR.setPower(1); // return
-        launchL.setPower(-1);
-        flingerCounter.reset();
-        while (flingerCounter.time() < ARTT/2){}
-        launchL.setPower(0);
-        launchR.setPower(0);
+      //  catcher.setPosition(.5);
+//        ElapsedTime flingerCounter = new ElapsedTime();
+//        launchR.setPower(1); // prep
+//        launchL.setPower(-1);
+//        flingerCounter.reset();
+//        while (flingerCounter.time() < ARTT/2){}
+//        launchL.setPower(1); //hit ball
+//        launchR.setPower(-1);
+//        flingerCounter.reset();
+//        while (flingerCounter.time() < ARTT){}
+//        launchR.setPower(1); // return
+//        launchL.setPower(-1);
+//        flingerCounter.reset();
+//        while (flingerCounter.time() < ARTT/2){}
+//        launchL.setPower(0);
+//        launchR.setPower(0);
     }
 }
 

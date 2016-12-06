@@ -1,15 +1,16 @@
  package org.firstinspires.ftc.teamcode;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.Servo;
-        import com.qualcomm.robotcore.util.ElapsedTime;
+
+ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+ import com.qualcomm.robotcore.hardware.DcMotor;
+ import com.qualcomm.robotcore.hardware.Servo;
+ import com.qualcomm.robotcore.util.ElapsedTime;
 
  /**
  * Created by Karine on 10/27/2015.
  */
 @TeleOp
-public class MasterThroneTeleop extends OpMode {
+public class MasterThroneTeleopNew extends OpMode {
 
     DcMotor motorFrontRight;
     DcMotor motorFrontLeft;
@@ -24,7 +25,7 @@ public class MasterThroneTeleop extends OpMode {
     /**
      * Constructor
      */
-    public MasterThroneTeleop() {
+    public MasterThroneTeleopNew() {
     }
 
     @Override
@@ -49,6 +50,7 @@ public class MasterThroneTeleop extends OpMode {
         launchR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         catcher.setPosition(.9);
+        buttonBasher.setPosition(1);
        // pushr.setPosition(.5);
        // pushl.setPosition(.5);
     }
@@ -56,15 +58,15 @@ public class MasterThroneTeleop extends OpMode {
     @Override
     public void loop() {
         //Control method #2 Joysticks
-        double n = -(gamepad1.left_stick_x + gamepad1.left_stick_y);
-        double m = (gamepad1.left_stick_y - gamepad1.left_stick_x);
+        double n = ((gamepad1.left_stick_x + gamepad1.left_stick_y))/.8;
+        double m = (-(gamepad1.left_stick_y - gamepad1.left_stick_x))/.8;
         motorFrontRight.setPower(n);
         motorBackRight.setPower(n);
         motorFrontLeft.setPower(m);
         motorBackLeft.setPower(m);
 
         if (gamepad2.x) {
-            catcher.setPosition(0.5);
+            catcher.setPosition(0.9);
         } else if (gamepad2.b) {
             catcher.setPosition(0);
         }
