@@ -18,6 +18,9 @@ public class MasterThroneAutoBallBlue extends LinearOpMode {
     DcMotor motorBackRight;
     DcMotor motorBackLeft;
 
+    Servo catcher;
+    Servo buttonbash;
+
     ModernRoboticsI2cGyro sensorGyro;
     EncoderMoveUtil encoderMoveUtil;
 
@@ -31,6 +34,9 @@ public class MasterThroneAutoBallBlue extends LinearOpMode {
         motorFrontLeft = hardwareMap.dcMotor.get("motor_3");
         motorBackLeft = hardwareMap.dcMotor.get("motor_4");
         sensorGyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
+        AutonomousUtil AutonomousUtil;
+        catcher = hardwareMap.servo.get("servo_1");
+        buttonbash = hardwareMap.servo.get("servo_2");
 
         motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -51,13 +57,12 @@ public class MasterThroneAutoBallBlue extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
-                telemetry, sensorGyro);
+        //encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
+        //        telemetry, sensorGyro);
 
         //Robot length: 26cm
-        encoderMoveUtil.forward(100 - RBL, 0.25); //position robot
-        encoderMoveUtil.turnGyro(30, 0.25); //aim at ball
-        encoderMoveUtil.forward(60, 0.50); //hit ball
+        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro);
+        AutonomousUtil.hitBall(false);
     }
 }
 

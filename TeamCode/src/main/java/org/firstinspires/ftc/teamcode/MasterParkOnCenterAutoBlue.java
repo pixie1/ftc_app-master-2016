@@ -35,7 +35,7 @@ public class MasterParkOnCenterAutoBlue extends LinearOpMode {
         motorFrontLeft = hardwareMap.dcMotor.get("motor_3");
         motorBackLeft = hardwareMap.dcMotor.get("motor_4");
         sensorGyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
-
+        AutonomousUtil AutonomousUtil;
         catcher = hardwareMap.servo.get("servo_1");
         buttonbash = hardwareMap.servo.get("servo_2");
 
@@ -59,9 +59,10 @@ public class MasterParkOnCenterAutoBlue extends LinearOpMode {
         telemetry.addData("Initialization done", "0");
         telemetry.update();
         waitForStart();
-
-        encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
-                telemetry, sensorGyro);
+        //encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
+                //telemetry, sensorGyro);
+        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro);
+        /*
         buttonbash.setPosition(1);
         catcher.setPosition(0);
         ElapsedTime delay = new ElapsedTime();
@@ -71,6 +72,8 @@ public class MasterParkOnCenterAutoBlue extends LinearOpMode {
         encoderMoveUtil.forward(100 - RBL, 0.25); //position robot
         encoderMoveUtil.turnGyro(30, 0.25); //aim at ball
         encoderMoveUtil.forward(60, 0.50); //hit ball
+        */
+        AutonomousUtil.parkOnCenter(false);
     }
 }
 
