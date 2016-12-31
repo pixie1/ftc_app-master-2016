@@ -38,6 +38,7 @@ import android.view.View;
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -59,7 +60,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp
+@Autonomous
 public class MasterAutoBeacon extends LinearOpMode {
   DcMotor motorFrontRight;
   DcMotor motorFrontLeft;
@@ -69,6 +70,7 @@ public class MasterAutoBeacon extends LinearOpMode {
   EncoderMoveUtil encoderMoveUtil;
   Servo buttonbashL;
   Servo buttonbashR;
+  Servo catcher;
   ColorSensor colorSensor;    // Hardware Device Object
   ColorSensor lineSensor;
   ModernRoboticsI2cRangeSensor rangeSensor;
@@ -79,20 +81,19 @@ public class MasterAutoBeacon extends LinearOpMode {
     int LoopARep = 0;
     final int RBL = 26;
 
-
     motorFrontRight = hardwareMap.dcMotor.get("motor_1");
     motorBackRight = hardwareMap.dcMotor.get("motor_2");
     motorFrontLeft = hardwareMap.dcMotor.get("motor_3");
     motorBackLeft = hardwareMap.dcMotor.get("motor_4");
-    buttonbashL = hardwareMap.servo.get("servo_2");
-    buttonbashR = hardwareMap.servo.get("servo_3");
-
+    buttonbashL = hardwareMap.servo.get("servo_3");
+    buttonbashR = hardwareMap.servo.get("servo_4");
+    catcher = hardwareMap.servo.get("servo_2");
     sensorGyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
     rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "sensor_range");
     colorSensor = hardwareMap.colorSensor.get("sensor_color");
     lineSensor = hardwareMap.colorSensor.get("sensor_line");
 
-    lineSensor.setI2cAddress(new I2cAddr(0x70));
+    lineSensor.setI2cAddress(new I2cAddr(0x3a));
 
     motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -103,9 +104,9 @@ public class MasterAutoBeacon extends LinearOpMode {
     motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-
+    buttonbashL.setPosition(1);
+    buttonbashR.setPosition(0.3);
+    catcher.setPosition(0.5);
     sensorGyro.calibrate();
     while (sensorGyro.isCalibrating()) {
       telemetry.addData("gyro sensor is calibrating", "0");
@@ -123,13 +124,13 @@ public class MasterAutoBeacon extends LinearOpMode {
     lineSensor.enableLed(true);
     waitForStart();
     while (opModeIsActive()) {
-      encoderMoveUtil.forward(90,0.5);
+      encoderMoveUtil.forward(-90,0.5);
       encoderMoveUtil.turnGyro(60,0.5);
       while (lineSensor.red()<100 && lineSensor.blue()<100 && lineSensor.green()<100 && LoopARep != LoopATime) {
-        motorBackLeft.setPower(0.5);
-        motorBackRight.setPower(0.5);
-        motorFrontLeft.setPower(0.5);
-        motorFrontRight.setPower(0.5);
+        motorBackLeft.setPower(-0.5);
+        motorBackRight.setPower(-0.5);
+        motorFrontLeft.setPower(-0.5);
+        motorFrontRight.setPower(-0.5);
         LoopARep++;
       }
       while(rangeSensor.cmUltrasonic()>30 && rangeSensor.cmUltrasonic()<100){
@@ -152,16 +153,18 @@ public class MasterAutoBeacon extends LinearOpMode {
       motorBackRight.setPower(0);
       encoderMoveUtil.turnGyro(10,0.5);
       while(rangeSensor.cmUltrasonic()>5) {
-        motorFrontLeft.setPower(0.5);
-        motorFrontRight.setPower(0.5);
-        motorBackLeft.setPower(0.5);
-        motorBackRight.setPower(0.5);
+        motorFrontLeft.setPower(-0.5);
+        motorFrontRight.setPower(-0.5);
+        motorBackLeft.setPower(-0.5);
+        motorBackRight.setPower(-0.5);
       }
       if (colorSensor.red() == 1) {
         telemetry.addData("RED","");
+        buttonbashR.setPosition(0.3);
       }
       if (colorSensor.blue() == 1) {
         telemetry.addData("BLUE","");
+        buttonbashL.setPosition(0);
       }
       /*
       telemetry.addData("Clear", colorSensor.alpha());

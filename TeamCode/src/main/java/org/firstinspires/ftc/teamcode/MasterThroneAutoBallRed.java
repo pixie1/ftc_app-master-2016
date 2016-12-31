@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * A simple test of a pair of motors
  */
-@Autonomous(name="MasterThroneAutoBallBlue", group="Master")
+@Autonomous(name="MasterThroneAutoBallRed ", group="Master")
 public class MasterThroneAutoBallRed extends LinearOpMode {
 
     DcMotor motorFrontRight;

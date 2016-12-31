@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * A simple test of a pair of motors
  */
-@Autonomous(name="MasterParkOnCenterAutoBlue", group="Master")
+@Autonomous(name="MasterParkOnCenterAutoRed", group="Master")
 public class MasterParkOnCenterAutoRed extends LinearOpMode {
 
     DcMotor motorFrontRight;

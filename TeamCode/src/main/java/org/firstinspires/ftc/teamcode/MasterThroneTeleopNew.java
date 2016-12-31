@@ -1,5 +1,7 @@
  package org.firstinspires.ftc.teamcode;
 
+ import android.widget.ToggleButton;
+
  import com.qualcomm.robotcore.eventloop.opmode.OpMode;
  import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  import com.qualcomm.robotcore.hardware.DcMotor;
@@ -22,7 +24,8 @@ public class MasterThroneTeleopNew extends OpMode {
     DcMotor launchL;
 
     Servo catcher;
-    Servo buttonBasher;
+    Servo buttonBasherL;
+     Servo buttonBasherR;
 
     /**
      * Constructor
@@ -40,8 +43,9 @@ public class MasterThroneTeleopNew extends OpMode {
         launchR = hardwareMap.dcMotor.get("motor_5");
         launchL = hardwareMap.dcMotor.get("motor_6");
         catcher = hardwareMap.servo.get("servo_1");
-        buttonBasher = hardwareMap.servo.get("servo_2");
-       // pushl = hardwareMap.servo.get("servo_3");
+        buttonBasherL = hardwareMap.servo.get("servo_3");
+        buttonBasherR = hardwareMap.servo.get("servo_4");
+        // pushl = hardwareMap.servo.get("servo_3");
         //pushr = hardwareMap.servo.get("servo_4");
 
         motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -50,31 +54,27 @@ public class MasterThroneTeleopNew extends OpMode {
         motorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         launchL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         launchR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-       // catcher.setPosition(.9);
-      //  buttonBasher.setPosition(0);
-       // pushr.setPosition(.5);
-       // pushl.setPosition(.5);
+        catcher.setPosition(.5);
+        buttonBasherR.setPosition(0.9);
+        buttonBasherL.setPosition(1);
     }
-     int ButtonState = 0;
+     //int ButtonState = 0;
+     //boolean toggleA = false;
+     //boolean toggleDpadL = false;
+     //boolean toggleDpadR = false;
+     //boolean aPrevStat = false;
      @Override
     public void loop() {
-
-        //catcher.setPosition(1);
-        //buttonBasher.setPosition(1);
-
         //Control method #2 Joysticks
+         //boolean aCurr = gamepad2.a;
+
+
         double n = ((gamepad1.left_stick_x + gamepad1.left_stick_y))/.8;
         double m = (-(gamepad1.left_stick_y - gamepad1.left_stick_x))/.8;
         motorFrontRight.setPower(n);
         motorBackRight.setPower(n);
         motorFrontLeft.setPower(m);
         motorBackLeft.setPower(m);
-         //if (gamepad2.dpad_up) { //Button Basher
-        //    buttonBasher.setPosition(1);
-        //} if (gamepad2.dpad_down) {
-        //    buttonBasher.setPosition(0);
-        //}
         if (gamepad2.a) {
             launchL.setPower(1);
             launchR.setPower(-1);
@@ -84,17 +84,8 @@ public class MasterThroneTeleopNew extends OpMode {
                 e.printStackTrace();
             }
             catcher.setPosition(1);
-            //ButtonState = 1;
-        }
-            /*
-        } if (gamepad2.a && ButtonState==1) {
-            catcher.setPosition(.5);
-            launchL.setPower(0);
-            launchR.setPower(0);
-            ButtonState = 0;
-        }
-        */
 
+        }
          if (gamepad2.y) {
              launchL.setPower(0);
              launchR.setPower(0);
@@ -106,15 +97,22 @@ public class MasterThroneTeleopNew extends OpMode {
              launchR.setPower(0);
              catcher.setPosition(1);
          }
-             /*} if (gamepad2.y && ButtonState==1){
-             launchL.setPower(0);
-             launchR.setPower(0);
-             ButtonState = 0;
-         }*/
          if(gamepad2.b) {
              catcher.setPosition(.5);
              launchL.setPower(0);
              launchR.setPower(0);
+         }
+         if(gamepad2.dpad_up) {
+             buttonBasherL.setPosition(1);
+         }
+         if(gamepad2.dpad_down) {
+             buttonBasherL.setPosition(0);
+         }
+         if(gamepad2.dpad_left) {
+             buttonBasherR.setPosition(0.9);
+         }
+         if(gamepad2.dpad_right) {
+             buttonBasherR.setPosition(0.3);
          }
     }
 }

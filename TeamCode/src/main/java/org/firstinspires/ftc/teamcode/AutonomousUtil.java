@@ -20,6 +20,7 @@ public class AutonomousUtil {
 
     Servo catcher;
     Servo buttonbash;
+    Servo buttonbashR;
     ModernRoboticsI2cGyro sensorGyro;
     public Telemetry telemetry;
 
@@ -38,6 +39,7 @@ public class AutonomousUtil {
     final int RBL = 26;
     final int GYROCENTER = 30; //The gyro degree constant for MasterThroneAutoBall and MAsterParkOnCEnterAuto
     final int GYRORAMP = 40; //Gyro constant for MasterThroneAutoRamp
+    final int GYROLAUNCH = 40;
     public AutonomousUtil(Servo catcher, Servo buttonbash, DcMotor motorFrontRight, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, Telemetry telemetry, ModernRoboticsI2cGyro sensorMRGyro) {
         this.motorBackLeft=motorBackLeft;
         this.motorBackRight=motorBackRight;
@@ -87,6 +89,18 @@ public class AutonomousUtil {
             encoderMoveUtil.turnGyro((GYRORAMP*2),0.25); //face ramp
         }
         encoderMoveUtil.forward(60,0.3); //get on ramp
+    }
+    public void launch(boolean red) {
+        encoderMoveUtil.forward(80-RBL,0.25);
+        if(red=true) {
+            encoderMoveUtil.turnGyro(-GYROLAUNCH,0.25);
+            encoderMoveUtil.forward(80,0.25);
+            encoderMoveUtil.turnGyro(-(GYROLAUNCH*2),0.25);
+        } else {
+            encoderMoveUtil.turnGyro(GYROLAUNCH,0.25);
+            encoderMoveUtil.forward(80,0.25);
+            encoderMoveUtil.turnGyro((GYROLAUNCH*2),0.25);
+        }
     }
 }
 
