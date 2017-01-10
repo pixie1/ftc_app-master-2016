@@ -3,16 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRGyro;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.internal.TelemetryImpl;
 
 public class EncoderMoveUtil {
-
-
     DcMotor motorFrontRight;
     DcMotor motorFrontLeft;
     DcMotor motorBackRight;
@@ -60,7 +53,7 @@ public class EncoderMoveUtil {
         return returnEncoderTicks;
     }
     public void forward(double disInCm, double speed) {
-        int current = motorFrontLeft.getCurrentPosition();
+        int current = motorFrontRight.getCurrentPosition();
         int disInEncoderTicks = cmToEncoderTicks(disInCm);
         telemetry.addData("currentEncoderValue", current);
         telemetry.addData("disInEncoderTicks", disInEncoderTicks);
@@ -69,7 +62,7 @@ public class EncoderMoveUtil {
         motorFrontRight.setPower(-speed);
         motorBackLeft.setPower(-speed);
         motorBackRight.setPower(-speed);
-        while (Math.abs(motorFrontLeft.getCurrentPosition()) < disInEncoderTicks + Math.abs(current)) {
+        while (Math.abs(Math.abs(motorFrontRight.getCurrentPosition())-Math.abs(current)) < Math.abs(disInEncoderTicks)) {
             telemetry.addData("Centimeters:", disInCm);
             telemetry.addData("Encoder Ticks:", disInEncoderTicks);
             telemetry.addData("Left Encoder at:", motorFrontLeft.getCurrentPosition());
@@ -85,29 +78,81 @@ public class EncoderMoveUtil {
         motorBackRight.setPower(0);
     }
     public void backward(double disInCm, double speed) {
-        int current = motorFrontLeft.getCurrentPosition();
+        int current = motorFrontRight.getCurrentPosition();
         int disInEncoderTicks = cmToEncoderTicks(disInCm);
-        while (Math.abs(Math.abs(motorFrontLeft.getCurrentPosition())-Math.abs(current)) < Math.abs(disInEncoderTicks)) {
+        motorFrontLeft.setPower(speed);
+        motorFrontRight.setPower(speed);
+        motorBackLeft.setPower(speed);
+        motorBackRight.setPower(speed);
+        while (Math.abs(Math.abs(motorFrontRight.getCurrentPosition())-Math.abs(current)) < Math.abs(disInEncoderTicks)) {
             telemetry.addData("Centimeters:", disInCm);
             telemetry.addData("Encoder Ticks:", disInEncoderTicks);
-            telemetry.addData("Left Encoder at:", motorFrontLeft.getCurrentPosition());
+            telemetry.addData("Front Left Encoder at:", motorFrontLeft.getCurrentPosition());
             telemetry.addData("Right Encoder at:", motorFrontRight.getCurrentPosition());
-            motorFrontLeft.setPower(speed);
-            motorFrontRight.setPower(speed);
-            motorBackLeft.setPower(speed);
-            motorFrontRight.setPower(speed);
+            telemetry.addData("Back Left Encoder at:", motorBackLeft.getCurrentPosition());
+            telemetry.addData("Back Right Encoder at:", motorBackRight.getCurrentPosition());
+            telemetry.update();
         }
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
         motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
+    }
+    public void turnGyroPrecise(int targetRelativeHeading, double speed) {
+
+        int angleCurrent = sensorGyro.getIntegratedZValue();
+        int targetHeading = angleCurrent + targetRelativeHeading;
+        telemetry.addData("HeadingCurrent", angleCurrent);
+        telemetry.addData("Target", targetHeading);
+        telemetry.update();
+        boolean right = false;
+        boolean left = false;
+        while (sensorGyro.getIntegratedZValue() > targetHeading || sensorGyro.getIntegratedZValue() < targetHeading) {
+            if (sensorGyro.getIntegratedZValue() > targetHeading) {
+                if (right) {
+                    stopMotors();
+                    right = false;
+                    left = true;
+                }
+                motorBackLeft.setPower(speed);
+                motorBackRight.setPower(-speed);
+                motorFrontLeft.setPower(speed);
+                motorFrontRight.setPower(-speed);
+                telemetry.addData("HeadingCurrent", sensorGyro.getIntegratedZValue());
+                telemetry.addData("Target", targetRelativeHeading);
+                telemetry.update();
+            } else if (sensorGyro.getIntegratedZValue() < targetHeading) {
+                if (left) {
+                    stopMotors();
+                    left = false;
+                    right = true;
+                }
+                motorBackLeft.setPower(-speed);
+                motorBackRight.setPower(speed);
+                motorFrontLeft.setPower(-speed);
+                motorFrontRight.setPower(speed);
+                telemetry.addData("HeadingCurrent", sensorGyro.getIntegratedZValue());
+                telemetry.addData("Target", targetRelativeHeading);
+                telemetry.update();
+            } else break;
+        }
     }
     public void turnGyro(int targetRelativeHeading, double speed){
+
         int angleCurrent = sensorGyro.getIntegratedZValue();
         int targetHeading=angleCurrent+targetRelativeHeading;
         telemetry.addData("HeadingCurrent", angleCurrent);
         telemetry.addData("Target", targetHeading);
+        telemetry.update();
+        boolean right = false;
+        boolean left= false;
         while (sensorGyro.getIntegratedZValue()>targetHeading+1 || sensorGyro.getIntegratedZValue()<targetHeading-1){
             if (sensorGyro.getIntegratedZValue()>targetHeading+1){
+                if (right) {
+                    stopMotors();
+                    right=false;
+                    left=true;
+                }
                motorBackLeft.setPower(speed);
                motorBackRight.setPower(-speed);
                motorFrontLeft.setPower(speed);
@@ -116,6 +161,11 @@ public class EncoderMoveUtil {
                telemetry.addData("Target",targetRelativeHeading);
                telemetry.update();
            } else if (sensorGyro.getIntegratedZValue()<targetHeading-1){
+                if (left) {
+                    stopMotors();
+                    left=false;
+                    right=true;
+                }
                motorBackLeft.setPower(-speed);
                motorBackRight.setPower(speed);
                motorFrontLeft.setPower(-speed);
@@ -129,6 +179,7 @@ public class EncoderMoveUtil {
         motorBackRight.setPower(0);
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
+
         telemetry.addData("TurnDone",0);
         telemetry.update();
     }

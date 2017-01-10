@@ -52,8 +52,8 @@ public class AutonomousUtil {
         encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro);
     }
     public void parkOnCenter(boolean red){
-        buttonbash.setPosition(1);
-        catcher.setPosition(0);
+        //buttonbash.setPosition(1);
+        catcher.setPosition(0.5);
         ElapsedTime delay = new ElapsedTime();
         delay.reset();
            while(delay.time()<10){}
@@ -67,8 +67,8 @@ public class AutonomousUtil {
         encoderMoveUtil.forward(60, 0.50);
     }
     public void hitBall(boolean red){
-        buttonbash.setPosition(1);
-        catcher.setPosition(0);
+        //buttonbash.setPosition(1);
+        catcher.setPosition(0.5);
         encoderMoveUtil.forward(100 - RBL, 0.25); //position robot
         if(red=true) {
             encoderMoveUtil.turnGyro(-GYROCENTER, 0.25);

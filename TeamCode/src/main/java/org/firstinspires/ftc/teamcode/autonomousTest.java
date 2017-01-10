@@ -35,14 +35,18 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.TelemetryImpl;
 
 /**
- * A simple test of a pair of motors
+ * A simple test of a pair  of motors
  */
 @Autonomous(name="Test", group="Master")
 public class autonomousTest extends LinearOpMode {
@@ -79,77 +83,123 @@ public class autonomousTest extends LinearOpMode {
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
         waitForStart();
         eTime = new ElapsedTime();
         eTime.reset();
 
+
     //    forward(100-RBL, 0.25);
+        ColorSensor colorSensor;    // Hardware Device Object
+        ColorSensor lineSensor= lineSensor = hardwareMap.colorSensor.get("sensor_line");
+        colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        OpticalDistanceSensor lightSensor= hardwareMap.opticalDistanceSensor.get("light_sensor");
+        lineSensor.setI2cAddress(new I2cAddr(0x3a));
+        lightSensor.enableLed(true);
+      //  colorSensor.setI2cAddress(new I2cAddr(0x3c));
 
-        double speed=0.25;
 
-        motorBackRight.setPower(-speed);
-        eTime.reset();
-        while(eTime.time()<5){
-            //telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
-            telemetry.addData("Back Right currentEncoderValue", motorBackRight.getCurrentPosition());
-            telemetry.update();
-        }
-        motorBackRight.setPower(0);
-        while(eTime.time()<5){
-            telemetry.addData("Back Right currentEncoderValue", motorBackRight.getCurrentPosition());
-            telemetry.update();
-        }
-        telemetry.addData("start back left", "0");
-        telemetry.update();
-        motorBackLeft.setPower(-speed);
-        eTime.reset();
-        while(eTime.time()<5){
-            //telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
-            telemetry.addData("Back Left currentEncoderValue", motorBackLeft.getCurrentPosition());
-            telemetry.update();
-        }
-        motorBackLeft.setPower(0);
-        while(eTime.time()<5){
-            telemetry.addData("Back Left currentEncoderValue", motorBackLeft.getCurrentPosition());
-            telemetry.update();
-        }
-        telemetry.addData("start Front Left", 0);
-        telemetry.update();
-        motorFrontLeft.getCurrentPosition();
 
-        telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
-        telemetry.update();
-
-        motorFrontLeft.setPower(-speed);
-        eTime.reset();
-        while(eTime.time()<5){
-            telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+        while (eTime.seconds() < 30) {
+            telemetry.addData("distance sensor", lightSensor.getLightDetected());
+            telemetry.addData("distance raw", lightSensor.getRawLightDetected());
+            telemetry.addData("distance raw max", lightSensor.getRawLightDetectedMax());
             telemetry.update();
         }
-        motorFrontLeft.setPower(0);
-        telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
-        telemetry.update();
-
-      //  current = motorFrontRight.getCurrentPosition();
-
-        while(eTime.time()<5){
-            telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
-            telemetry.addData("Front Right currentEncoderValue", motorFrontRight.getCurrentPosition());
-            telemetry.update();
-        }
-
-        motorFrontRight.setPower(-speed);
-        eTime.reset();
-        while(eTime.time()<5){
-            telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
-            telemetry.addData("Front Right currentEncoderValue", motorFrontRight.getCurrentPosition());
-            telemetry.update();
-        }
-        motorFrontRight.setPower(0);
-        while(eTime.time()<5){
-            telemetry.addData("Front Right currentEncoderValue", motorFrontRight.getCurrentPosition());
-            telemetry.update();
-        }
+//        double speed=0.25;
+//
+//        motorBackRight.setPower(-speed);
+//        eTime.reset();
+//        while(eTime.time()<5){
+//            //telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+//            telemetry.addData("Back Right currentEncoderValue", motorBackRight.getCurrentPosition());
+//            telemetry.update();
+//        }
+//        motorBackRight.setPower(0);
+//        while(eTime.time()<5){
+//            telemetry.addData("Back Right currentEncoderValue", motorBackRight.getCurrentPosition());
+//            telemetry.update();
+//        }
+//        motorBackRight.setPower(speed);
+//        eTime.reset();
+//        while(eTime.time()<5){
+//            //telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+//            telemetry.addData("Back Right currentEncoderValue", motorBackRight.getCurrentPosition());
+//            telemetry.update();
+//        }
+//        motorBackRight.setPower(0);
+//        while(eTime.time()<5){
+//            telemetry.addData("Back Right currentEncoderValue", motorBackRight.getCurrentPosition());
+//            telemetry.update();
+//        }
+//        telemetry.addData("start back left", "0");
+//        telemetry.update();
+//        motorBackLeft.setPower(-speed);
+//        eTime.reset();
+//        while(eTime.time()<5){
+//            //telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+//            telemetry.addData("Back Left currentEncoderValue", motorBackLeft.getCurrentPosition());
+//            telemetry.update();
+//        }
+//        motorBackLeft.setPower(speed);
+//        eTime.reset();
+//        while(eTime.time()<5){
+//            //telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+//            telemetry.addData("Back Left currentEncoderValue", motorBackLeft.getCurrentPosition());
+//            telemetry.update();
+//        }
+//        motorBackLeft.setPower(0);
+//        while(eTime.time()<5){
+//            telemetry.addData("Back Left currentEncoderValue", motorBackLeft.getCurrentPosition());
+//            telemetry.update();
+//        }
+//        telemetry.addData("start Front Left", 0);
+//        telemetry.update();
+//        motorFrontLeft.getCurrentPosition();
+//
+//        telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+//        telemetry.update();
+//
+//        motorFrontLeft.setPower(-speed);
+//        eTime.reset();
+//        while(eTime.time()<5){
+//            telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+//            telemetry.update();
+//        }
+//        motorFrontLeft.setPower(0);
+//        motorFrontLeft.setPower(speed);
+//
+//        eTime.reset();
+//        while(eTime.time()<5){
+//            telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+//            telemetry.update();
+//        }
+//        motorFrontLeft.setPower(0);
+//        telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+//        telemetry.update();
+//
+//      //  current = motorFrontRight.getCurrentPosition();
+//
+//        while(eTime.time()<5){
+//            telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+//            telemetry.addData("Front Right currentEncoderValue", motorFrontRight.getCurrentPosition());
+//            telemetry.update();
+//        }
+//
+//        motorFrontRight.setPower(-speed);
+//        eTime.reset();
+//        while(eTime.time()<5){
+//            telemetry.addData("Front Left currentEncoderValue", motorFrontLeft.getCurrentPosition());
+//            telemetry.addData("Front Right currentEncoderValue", motorFrontRight.getCurrentPosition());
+//            telemetry.update();
+//        }
+//        motorFrontRight.setPower(0);
+//        while(eTime.time()<5){
+//            telemetry.addData("Front Right currentEncoderValue", motorFrontRight.getCurrentPosition());
+//            telemetry.update();
+//        }
 
 
 

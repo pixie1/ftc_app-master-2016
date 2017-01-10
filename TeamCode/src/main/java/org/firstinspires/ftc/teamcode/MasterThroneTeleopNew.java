@@ -1,6 +1,5 @@
  package org.firstinspires.ftc.teamcode;
 
- import android.widget.ToggleButton;
 
  import com.qualcomm.robotcore.eventloop.opmode.OpMode;
  import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -8,7 +7,6 @@
  import com.qualcomm.robotcore.hardware.Servo;
  import com.qualcomm.robotcore.util.ElapsedTime;
 
- import java.util.BitSet;
 
  /**
  * Created by Karine on 10/27/2015.
@@ -89,7 +87,7 @@ public class MasterThroneTeleopNew extends OpMode {
          if (gamepad2.y) {
              launchL.setPower(0);
              launchR.setPower(0);
-             catcher.setPosition(0);
+             catcher.setPosition(.3);
              //ButtonState = 1;
          }
          if (gamepad2.x) {
@@ -109,10 +107,10 @@ public class MasterThroneTeleopNew extends OpMode {
              buttonBasherL.setPosition(0);
          }
          if(gamepad2.dpad_left) {
-             buttonBasherR.setPosition(0.9);
+             buttonBasherR.setPosition(1);
          }
          if(gamepad2.dpad_right) {
-             buttonBasherR.setPosition(0.3);
+             buttonBasherR.setPosition(0);
          }
     }
 }

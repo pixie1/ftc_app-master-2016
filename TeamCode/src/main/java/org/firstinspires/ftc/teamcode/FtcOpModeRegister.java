@@ -35,8 +35,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRColor;
-
 /**
  * Register Op Modes
  */
@@ -68,17 +66,20 @@ public class  FtcOpModeRegister implements OpModeRegister {
    // manager.register ("PushBotManual", PushBotManual.class);
    // manager.register("MasterLinearAutonomous", MasterLinearAutonomous.class);
     manager.register("MasterThroneTeleop", MasterThroneTeleop.class);
+    manager.register("MasterLauncherAutonomous", MasterLauncherAutonomous.class);
     manager.register("MasterThroneTeleopNew", MasterThroneTeleopNew.class);
     manager.register("JoystickLocationTest", JoystickLocationTest.class);
-    manager.register("MasterAutoBeacon", MasterAutoBeacon.class);
+    manager.register("MasterAutoBeaconBlue", MasterAutoBeaconBlue.class);
     manager.register("MasterThroneTeleopNoJoy", MasterThroneTeleopNoJoy.class);
     manager.register("MasterThroneAutoBallBlue", MasterThroneAutoBallBlue.class);
     manager.register("MasterThroneAutoRampBlue", MasterThroneAutoRampBlue.class);
     manager.register("MasterThroneAutoBallBlue", MasterParkOnCenterAutoBlue.class);
     manager.register("MasterParkOnCenterAutoRed", MasterParkOnCenterAutoRed.class);
     manager.register("AutonomousSimple", AutonomousSimple.class);
-    manager.register("ColorTest", MasterAutoBeacon.class);
+    manager.register("autoTest", autonomousTest.class);
+    manager.register("ColorTest", MasterAutoBeaconBlue.class);
     manager.register("ColorCalibrate", ColorCalibrate.class);
+    manager.register("MasterAutoBeaconTiltBlue", MasterAutoBeaconTiltBlue.class);
 
     //manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
     //manager.register("ColorSensorDriver", ColorSensorDriver.class);
