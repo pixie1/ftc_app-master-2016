@@ -64,7 +64,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @Autonomous
-public class MasterLauncherAutonomous extends LinearOpMode {
+public class MasterLauncherAutonomousBlue extends LinearOpMode {
     DcMotor motorFrontRight;
     DcMotor motorFrontLeft;
     DcMotor motorBackRight;
@@ -73,6 +73,7 @@ public class MasterLauncherAutonomous extends LinearOpMode {
     DcMotor launchL;
     ModernRoboticsI2cGyro sensorGyro;
     EncoderMoveUtil encoderMoveUtil;
+    AutonomousUtil AutonomousUtil;
     Servo buttonbashL;
     Servo buttonbashR;
     Servo catcher;
@@ -113,29 +114,32 @@ public class MasterLauncherAutonomous extends LinearOpMode {
 
         encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
                 telemetry, sensorGyro);
-
+        AutonomousUtil = new AutonomousUtil(catcher, buttonbashL, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, launchR, launchL, buttonbashR);
         colorSensor.enableLed(false);
         lineSensor.enableLed(true);
         waitForStart();
 
-        encoderMoveUtil.backward(70 , 0.5);
+        AutonomousUtil.launch(false);
+        /*
+        encoderMoveUtil.backward(70, 0.5);
 
         lineLookTime.reset();
 
-        while(lineLookTime.seconds()<6){
+        while (lineLookTime.seconds() < 6) {
             launchL.setPower(1);
             launchR.setPower(-1);
-            while(lineLookTime.seconds()<2){}
+            while (lineLookTime.seconds() < 2) {
+            }
             catcher.setPosition(1);
         }
         catcher.setPosition(0.5);
         buttonbashL.setPosition(1);
         buttonbashR.setPosition(0);
-        encoderMoveUtil.turnGyro(-30, 0.3);
+        encoderMoveUtil.turnGyroPrecise(-30, 0.3);
         encoderMoveUtil.backward(30, 0.5);
-        encoderMoveUtil.turnGyro(45,0.3);
-        encoderMoveUtil.backward(70,0.5);
-
+        encoderMoveUtil.turnGyroPrecise(45, 0.3);
+        encoderMoveUtil.backward(70, 0.5);
+        */
     }
 
     private void initMotors() {

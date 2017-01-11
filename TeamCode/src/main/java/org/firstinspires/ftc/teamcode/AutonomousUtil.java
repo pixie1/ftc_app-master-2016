@@ -17,6 +17,9 @@ public class AutonomousUtil {
     DcMotor motorFrontLeft;
     DcMotor motorBackRight;
     DcMotor motorBackLeft;
+    DcMotor launchL;
+    DcMotor launchR;
+
 
     Servo catcher;
     Servo buttonbash;
@@ -34,73 +37,144 @@ public class AutonomousUtil {
     //buttonbash = hardwareMap.servo.get("servo_2");
 
 
-
     EncoderMoveUtil encoderMoveUtil;
     final int RBL = 26;
     final int GYROCENTER = 30; //The gyro degree constant for MasterThroneAutoBall and MAsterParkOnCEnterAuto
     final int GYRORAMP = 40; //Gyro constant for MasterThroneAutoRamp
     final int GYROLAUNCH = 40;
-    public AutonomousUtil(Servo catcher, Servo buttonbash, DcMotor motorFrontRight, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, Telemetry telemetry, ModernRoboticsI2cGyro sensorMRGyro) {
-        this.motorBackLeft=motorBackLeft;
-        this.motorBackRight=motorBackRight;
-        this.motorFrontLeft=motorFrontLeft;
-        this.motorFrontRight=motorFrontRight;
-        this.buttonbash=buttonbash;
-        this.catcher=catcher;
-        this.telemetry=telemetry;
-        this.sensorGyro=sensorMRGyro;
+
+    public AutonomousUtil(Servo catcher, Servo buttonbash, DcMotor motorFrontRight, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, Telemetry telemetry, ModernRoboticsI2cGyro sensorMRGyro, DcMotor launchR, DcMotor launchL, Servo buttonbashR) {
+        this.motorBackLeft = motorBackLeft;
+        this.motorBackRight = motorBackRight;
+        this.motorFrontLeft = motorFrontLeft;
+        this.motorFrontRight = motorFrontRight;
+        this.buttonbash = buttonbash;
+        this.catcher = catcher;
+        this.telemetry = telemetry;
+        this.sensorGyro = sensorMRGyro;
+        this.launchR = launchR;
+        this.launchL = launchL;
+        this.buttonbashR = buttonbashR;
         encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro);
     }
-    public void parkOnCenter(boolean red){
+
+    public void parkOnCenter(boolean red) {
         //buttonbash.setPosition(1);
         catcher.setPosition(0.5);
         ElapsedTime delay = new ElapsedTime();
         delay.reset();
-           while(delay.time()<10){}
+        while (delay.time() < 10) {
+        }
         //Robot length: 26cm
         encoderMoveUtil.forward(100 - RBL, 0.25); //position robot
-        if(red=true) {
+        if (red = true) {
             encoderMoveUtil.turnGyro(-GYROCENTER, 0.25); //aim at ball
         } else {
-            encoderMoveUtil.turnGyro(GYROCENTER,0.25);
+            encoderMoveUtil.turnGyro(GYROCENTER, 0.25);
         }
         encoderMoveUtil.forward(60, 0.50);
     }
-    public void hitBall(boolean red){
+
+    public void hitBall(boolean red) {
         //buttonbash.setPosition(1);
         catcher.setPosition(0.5);
         encoderMoveUtil.forward(100 - RBL, 0.25); //position robot
-        if(red=true) {
+        if (red = true) {
             encoderMoveUtil.turnGyro(-GYROCENTER, 0.25);
         } else {
             encoderMoveUtil.turnGyro(GYROCENTER, 0.25);
         }
         encoderMoveUtil.forward(60, 0.50); //hit ball
     }
-    public void ramp(boolean red){
-        encoderMoveUtil.forward(40-RBL,0.25); //position robot
-        if (red=true) {
-            encoderMoveUtil.turnGyro(-GYRORAMP,0.25); //turn parrallel to ramp
-            encoderMoveUtil.forward(70,0.25); //position near center of ramp
-            encoderMoveUtil.turnGyro(-(GYRORAMP*2),0.25); //face ramp
+
+    public void ramp(boolean red) {
+        encoderMoveUtil.forward(40 - RBL, 0.25); //position robot
+        if (red = true) {
+            encoderMoveUtil.turnGyro(-GYRORAMP, 0.25); //turn parrallel to ramp
+            encoderMoveUtil.forward(70, 0.25); //position near center of ramp
+            encoderMoveUtil.turnGyro(-(GYRORAMP * 2), 0.25); //face ramp
         } else {
-            encoderMoveUtil.turnGyro(GYRORAMP,0.25); //turn parrallel to ramp
-            encoderMoveUtil.forward(70,0.25); //position near center of ramp
-            encoderMoveUtil.turnGyro((GYRORAMP*2),0.25); //face ramp
+            encoderMoveUtil.turnGyro(GYRORAMP, 0.25); //turn parrallel to ramp
+            encoderMoveUtil.forward(70, 0.25); //position near center of ramp
+            encoderMoveUtil.turnGyro((GYRORAMP * 2), 0.25); //face ramp
         }
-        encoderMoveUtil.forward(60,0.3); //get on ramp
+        encoderMoveUtil.forward(60, 0.3); //get on ramp
     }
+
     public void launch(boolean red) {
-        encoderMoveUtil.forward(80-RBL,0.25);
-        if(red=true) {
-            encoderMoveUtil.turnGyro(-GYROLAUNCH,0.25);
-            encoderMoveUtil.forward(80,0.25);
-            encoderMoveUtil.turnGyro(-(GYROLAUNCH*2),0.25);
+        ElapsedTime lineLookTime = new ElapsedTime();
+        if (red = true) {
+            encoderMoveUtil.backward(70, 0.5);
+
+            lineLookTime.reset();
+
+            while (lineLookTime.seconds() < 6) {
+                launchL.setPower(1);
+                launchR.setPower(-1);
+                while (lineLookTime.seconds() < 2) {
+                }
+                catcher.setPosition(1);
+            }
+            catcher.setPosition(0.5);
+            buttonbash.setPosition(1);
+            buttonbashR.setPosition(0);
+            encoderMoveUtil.turnGyroPrecise(30, 0.3);
+            encoderMoveUtil.backward(30, 0.5);
+            encoderMoveUtil.turnGyroPrecise(-45, 0.3);
+            encoderMoveUtil.backward(70, 0.5);
         } else {
-            encoderMoveUtil.turnGyro(GYROLAUNCH,0.25);
-            encoderMoveUtil.forward(80,0.25);
-            encoderMoveUtil.turnGyro((GYROLAUNCH*2),0.25);
+            encoderMoveUtil.backward(70, 0.5);
+
+            lineLookTime.reset();
+
+            while (lineLookTime.seconds() < 6) {
+                launchL.setPower(1);
+                launchR.setPower(-1);
+                while (lineLookTime.seconds() < 2) {
+                }
+                catcher.setPosition(1);
+            }
+            catcher.setPosition(0.5);
+            buttonbash.setPosition(1);
+            buttonbashR.setPosition(0);
+            encoderMoveUtil.turnGyroPrecise(-30, 0.3);
+            encoderMoveUtil.backward(30, 0.5);
+            encoderMoveUtil.turnGyroPrecise(45, 0.3);
+            encoderMoveUtil.backward(70, 0.5);
+        }
+    }
+
+    public void launchUpper(boolean red) {
+        ElapsedTime lineLookTime = new ElapsedTime();
+        if (red = true) {
+            encoderMoveUtil.backward(55, 0.5);
+            encoderMoveUtil.turnGyroPrecise(-35, 0.2);
+            encoderMoveUtil.backward(15, 0.5);
+            lineLookTime.reset();
+
+            while(lineLookTime.seconds()<6){
+                launchL.setPower(1);
+                launchR.setPower(-1);
+                while(lineLookTime.seconds()<2){}
+                catcher.setPosition(1);
+            }
+            catcher.setPosition(0.5);
+            encoderMoveUtil.backward(50,0.5);
+
+        } else {
+            encoderMoveUtil.backward(55, 0.5);
+            encoderMoveUtil.turnGyroPrecise(35, 0.2);
+            encoderMoveUtil.backward(15, 0.5);
+            lineLookTime.reset();
+
+            while(lineLookTime.seconds()<6){
+                launchL.setPower(1);
+                launchR.setPower(-1);
+                while(lineLookTime.seconds()<2){}
+                catcher.setPosition(1);
+            }
+            catcher.setPosition(0.5);
+            encoderMoveUtil.backward(50,0.5);
         }
     }
 }
-

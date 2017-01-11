@@ -56,7 +56,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @Autonomous
-public class MasterLauncherAutonomousUpper extends LinearOpMode {
+public class MasterLauncherAutonomousUpperBlue extends LinearOpMode {
     DcMotor motorFrontRight;
     DcMotor motorFrontLeft;
     DcMotor motorBackRight;
@@ -65,6 +65,7 @@ public class MasterLauncherAutonomousUpper extends LinearOpMode {
     DcMotor launchL;
     ModernRoboticsI2cGyro sensorGyro;
     EncoderMoveUtil encoderMoveUtil;
+    AutonomousUtil AutonomousUtil;
     Servo buttonbashL;
     Servo buttonbashR;
     Servo catcher;
@@ -105,11 +106,12 @@ public class MasterLauncherAutonomousUpper extends LinearOpMode {
 
         encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
                 telemetry, sensorGyro);
-
+        AutonomousUtil = new AutonomousUtil(catcher, buttonbashL, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, launchR, launchL, buttonbashR);
         colorSensor.enableLed(false);
         lineSensor.enableLed(true);
         waitForStart();
-
+        AutonomousUtil.launchUpper(false);
+        /*
         encoderMoveUtil.backward(55, 0.5);
         encoderMoveUtil.turnGyroPrecise(35, 0.2);
         encoderMoveUtil.backward(15, 0.5);
@@ -123,7 +125,7 @@ public class MasterLauncherAutonomousUpper extends LinearOpMode {
         }
         catcher.setPosition(0.5);
         encoderMoveUtil.backward(50,0.5);
-
+        */
     }
 
     private void initMotors() {
