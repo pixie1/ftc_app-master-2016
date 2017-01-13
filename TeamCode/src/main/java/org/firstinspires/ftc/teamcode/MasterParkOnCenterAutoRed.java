@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * A simple test of a pair of motors
  */
-@Autonomous(name="MasterParkOnCenterAutoRed", group="Master")
+//@Autonomous
 public class MasterParkOnCenterAutoRed extends LinearOpMode {
 
     DcMotor motorFrontRight;
@@ -61,7 +61,7 @@ public class MasterParkOnCenterAutoRed extends LinearOpMode {
         waitForStart();
         //encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
         //telemetry, sensorGyro);
-        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro);
+        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
         /*
         buttonbash.setPosition(1);
         catcher.setPosition(0);

@@ -5,7 +5,7 @@
         /**
          * Created by Karine on 10/27/2015.
          */
-        @TeleOp
+        //@TeleOp
         public class MasterThroneTeleopNoJoy extends OpMode {
             DcMotor motorFrontRight;
             DcMotor motorFrontLeft;

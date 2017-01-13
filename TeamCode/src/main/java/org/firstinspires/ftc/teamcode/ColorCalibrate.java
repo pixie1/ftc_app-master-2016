@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp
+//@TeleOp
 public class ColorCalibrate extends LinearOpMode {
   ColorSensor colorSensor;    // Hardware Device Object
   int Rvals[] = {0,0};

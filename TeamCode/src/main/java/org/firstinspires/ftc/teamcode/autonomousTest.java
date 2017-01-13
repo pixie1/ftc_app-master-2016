@@ -48,7 +48,7 @@ import org.firstinspires.ftc.robotcore.internal.TelemetryImpl;
 /**
  * A simple test of a pair  of motors
  */
-@Autonomous(name="Test", group="Master")
+//@Autonomous
 public class autonomousTest extends LinearOpMode {
 
     DcMotor motorFrontRight;

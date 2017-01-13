@@ -4,7 +4,7 @@
         /**
          * Created by Karine on 10/27/2015.
          */
-        @TeleOp
+        //@TeleOp
         public class JoystickLocationTest extends OpMode {
             public JoystickLocationTest() {
 

@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * A simple test of a pair of motors
  */
-@Autonomous
+//@Autonomous
 public class MasterThroneAutoRampBlue extends LinearOpMode {
     DcMotor motorFrontRight;
     DcMotor motorFrontLeft;
@@ -67,7 +67,7 @@ public class MasterThroneAutoRampBlue extends LinearOpMode {
 
         //encoderMoveUtil= new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
         //        telemetry, sensorGyro);
-        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro);
+        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
         AutonomousUtil.ramp(false);
     }
 }

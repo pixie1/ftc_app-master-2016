@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * A simple test of a pair of motors
  */
-@Autonomous(name="MasterThroneAutoBallRed ", group="Master")
+//@Autonomous
 public class MasterThroneAutoBallRed extends LinearOpMode {
 
     DcMotor motorFrontRight;
@@ -61,7 +61,7 @@ public class MasterThroneAutoBallRed extends LinearOpMode {
         //        telemetry, sensorGyro);
 
         //Robot length: 26cm
-        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro);
+        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
         AutonomousUtil.hitBall(true);
     }
 }

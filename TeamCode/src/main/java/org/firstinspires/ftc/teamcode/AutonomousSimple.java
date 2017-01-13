@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * A simple test of a pair of motors
  */
-@Autonomous
+//@Autonomous
 public class AutonomousSimple extends LinearOpMode {
     DcMotor motorFrontRight;
     DcMotor motorFrontLeft;

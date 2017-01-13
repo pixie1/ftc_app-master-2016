@@ -56,58 +56,12 @@ public class  FtcOpModeRegister implements OpModeRegister {
      * If two or more op modes are registered with the same name, the app will display an error.
      */
 
-  //  manager.register("NullOp", NullOp.class);
-
-    //manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
-    //manager.register("K9TeleOp", K9TeleOp.class);
-   // manager.register("OurTeleOp", OurTeleOp.class);
-   // manager.register("ServoTeleOp", ServoTeleOp.class);
-   // manager.register ("PushBotAuto", PushBotAuto.class);
-   // manager.register ("PushBotManual", PushBotManual.class);
-   // manager.register("MasterLinearAutonomous", MasterLinearAutonomous.class);
-    //manager.register("MasterThroneTeleop", MasterThroneTeleop.class);
-    //manager.register("MasterLauncherAutonomousBlue", MasterLauncherAutonomousBlue.class);
-
-    //manager.register("JoystickLocationTest", JoystickLocationTest.class);
     manager.register("MasterThroneTeleopNew", MasterThroneTeleopNew.class);
+    manager.register("MasterLauncherAutonomousUpperBlue", MasterLauncherAutonomousUpperBlue.class);
+    manager.register("MasterLauncherAutonomousUpperRed", MasterLauncherAutonomousUpperRed.class);
+    manager.register("MasterLauncherAutonomousBlue", MasterLauncherAutonomousBlue.class);
+    manager.register("MasterLauncherAutonomousRed", MasterLauncherAutonomousRed.class);
 
-    //manager.register("MasterAutoBeaconBlue", MasterAutoBeaconBlue.class);
-    //manager.register("MasterAutoBeaconTiltBlue", MasterAutoBeaconTiltBlue.class);
-
-    //manager.register("MasterThroneTeleopNoJoy", MasterThroneTeleopNoJoy.class);
-    //manager.register("MasterThroneAutoBallBlue", MasterThroneAutoBallBlue.class);
-    //manager.register("MasterThroneAutoRampBlue", MasterThroneAutoRampBlue.class);
-    //manager.register("MasterThroneAutoBallBlue", MasterParkOnCenterAutoBlue.class);
-    //manager.register("MasterParkOnCenterAutoRed", MasterParkOnCenterAutoRed.class);
-    //manager.register("AutonomousSimple", AutonomousSimple.class);
-    //manager.register("autoTest", autonomousTest.class);
-    //manager.register("ColorTest", MasterAutoBeaconBlue.class);
-    //manager.register("ColorCalibrate", ColorCalibrate.class);
-
-
-    //manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
-    //manager.register("ColorSensorDriver", ColorSensorDriver.class);
-
-    //manager.register("IrSeekerOp", IrSeekerOp.class);
-    //manager.register("CompassCalibration", CompassCalibration.class);
-    //manager.register("I2cAddressChangeExample", LinearI2cAddressChange.class);
-
-
-    //manager.register("NxtTeleOp", NxtTeleOp.class);
-    
-    //manager.register("LinearK9TeleOp", LinearK9TeleOp.class);
-    //manager.register("LinearIrExample", LinearIrExample.class);
-
-    
-    //manager.register ("PushBotManual1", PushBotManual1.class);
-    //manager.register ("PushBotAutoSensors", PushBotAutoSensors.class);
-    //manager.register ("PushBotIrEvent", PushBotIrEvent.class);
-    
-    //manager.register ("PushBotManualSensors", PushBotManualSensors.class);
-    //manager.register ("PushBotOdsDetectEvent", PushBotOdsDetectEvent.class);
-    //manager.register ("PushBotOdsFollowEvent", PushBotOdsFollowEvent.class);
-    //manager.register ("PushBotTouchEvent", PushBotTouchEvent.class);    
-    
     //manager.register("PushBotDriveTouch", PushBotDriveTouch.java);
     //manager.register("PushBotIrSeek", PushBotIrSeek.java);
     //manager.register("PushBotSquare", PushBotSquare.java);

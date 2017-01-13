@@ -75,6 +75,7 @@ public class MasterAutoBeaconTiltBlue extends LinearOpMode {
     @Override
     public void runOpMode() {
         final int RBL = 26; // ROBOT LENGTH
+        int loopEnd = 0;
         final double MATLIGHT = 0.7; // MAT REFLECTED LIGHT
         final double WHITELIGHT = 1; // LINE REFLECTED LIGHT
         ElapsedTime lineLookTime = new ElapsedTime();
@@ -92,8 +93,8 @@ public class MasterAutoBeaconTiltBlue extends LinearOpMode {
         //lineSensor.setI2cAddress(new I2cAddr(0x3a));
 
 
-        buttonbashL.setPosition(0);
-        buttonbashR.setPosition(0.7);
+        buttonbashL.setPosition(1);
+        buttonbashR.setPosition(1);
         catcher.setPosition(0.5);
         sensorGyro.calibrate();
         while (sensorGyro.isCalibrating()) {
@@ -147,43 +148,44 @@ public class MasterAutoBeaconTiltBlue extends LinearOpMode {
         //    motorFrontRight.setPower(0.5);
         //    motorBackLeft.setPower(-0.5);
         //    motorBackRight.setPower(0.5);
-
-        motorFrontLeft.setPower(0);
-        motorFrontRight.setPower(0);
-        motorBackLeft.setPower(0);
-        motorBackRight.setPower(0);
-    }
-        /*
-//    encoderMoveUtil.turnGyro(10,0.5);
-        while (rangeSensor.cmUltrasonic() > 5) {
+        while (loopEnd != 1) {
+            telemetry.addData("CM Optical", rangeSensor.cmOptical());
+            telemetry.addData("CM Ultra", rangeSensor.cmUltrasonic());
+            telemetry.update();
             motorFrontLeft.setPower(0.1);
             motorFrontRight.setPower(0.1);
             motorBackLeft.setPower(0.1);
             motorBackRight.setPower(0.1);
+            if (rangeSensor.cmOptical() <= 10){
+                motorFrontLeft.setPower(0);
+                motorFrontRight.setPower(0);
+                motorBackLeft.setPower(0);
+                motorBackRight.setPower(0);
+                loopEnd++;
+            }
         }
-        buttonbashR.setPosition(0.3);
+//    encoderMoveUtil.turnGyro(10,0.5);
+        buttonbashR.setPosition(0);
         if (colorSensor.red() >= 1) {
             telemetry.addData("RED", "");
-            buttonbashR.setPosition(0.7);
+            buttonbashR.setPosition(0);
             buttonbashL.setPosition(1);
         }
         if (colorSensor.blue() >= 1) {
             telemetry.addData("BLUE", "");
-            buttonbashL.setPosition(0);
-            buttonbashR.setPosition(0.3);
-
-        }
-        motorFrontLeft.setPower(0.1);
-        motorFrontRight.setPower(0.1);
-        motorBackLeft.setPower(0.1);
-        motorBackRight.setPower(0.1);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            buttonbashL.setPosition(1);
+            buttonbashR.setPosition(0);
+        }//
+        //motorFrontLeft.setPower(0.1);
+        //motorFrontRight.setPower(0.1);
+        //motorBackLeft.setPower(0.1);
+        //motorBackRight.setPower(0.1);
+        //try {
+        //    Thread.sleep(1000);
+        //} catch (InterruptedException e) {
+        //    e.printStackTrace();
+        //}
     }
-    */
     private void initMotors() {
         motorFrontRight = hardwareMap.dcMotor.get("motor_1");
         motorBackRight = hardwareMap.dcMotor.get("motor_2");
@@ -197,10 +199,6 @@ public class MasterAutoBeaconTiltBlue extends LinearOpMode {
         motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//       motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//      motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//      motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//      motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

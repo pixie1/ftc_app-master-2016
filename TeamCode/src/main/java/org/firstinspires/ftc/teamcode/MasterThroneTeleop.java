@@ -8,7 +8,7 @@
  /**
  * Created by Karine on 10/27/2015.
  */
-@TeleOp
+//@TeleOp
 public class MasterThroneTeleop extends OpMode {
 
     DcMotor motorFrontRight;
