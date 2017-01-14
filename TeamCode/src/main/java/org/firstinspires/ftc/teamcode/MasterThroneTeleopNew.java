@@ -53,7 +53,7 @@ public class MasterThroneTeleopNew extends OpMode {
         launchL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         launchR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         catcher.setPosition(.5);
-        buttonBasherR.setPosition(0.9);
+        buttonBasherR.setPosition(0.8);
         buttonBasherL.setPosition(1);
     }
      //int ButtonState = 0;
@@ -107,10 +107,10 @@ public class MasterThroneTeleopNew extends OpMode {
              buttonBasherL.setPosition(0);
          }
          if(gamepad2.dpad_left) {
-             buttonBasherR.setPosition(1);
+             buttonBasherR.setPosition(0.8 );
          }
          if(gamepad2.dpad_right) {
-             buttonBasherR.setPosition(0);
+             buttonBasherR.setPosition(0.2);
          }
     }
 }

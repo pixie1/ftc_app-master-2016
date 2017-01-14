@@ -93,8 +93,8 @@ public class MasterLauncherAutonomousUpperBlue extends LinearOpMode {
         lineSensor.setI2cAddress(new I2cAddr(0x3a));
 
 
-        buttonbashL.setPosition(0);
-        buttonbashR.setPosition(0.7);
+        buttonbashL.setPosition(0.1);
+        buttonbashR.setPosition(0.8);
         catcher.setPosition(0.5);
         sensorGyro.calibrate();
         while (sensorGyro.isCalibrating()) {

@@ -39,8 +39,8 @@ public class MasterLauncherAutonomousRed extends LinearOpMode {
         buttonbashR = hardwareMap.servo.get("servo_4");
         catcher = hardwareMap.servo.get("servo_1");
         sensorGyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
-        buttonbashL.setPosition(0);
-        buttonbashR.setPosition(1);
+        buttonbashL.setPosition(0.1);
+        buttonbashR.setPosition(0.8);
         catcher.setPosition(0.5);
 
         sensorGyro.calibrate();

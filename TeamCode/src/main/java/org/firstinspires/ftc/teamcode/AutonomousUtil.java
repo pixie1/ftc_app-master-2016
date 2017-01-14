@@ -102,79 +102,51 @@ public class AutonomousUtil {
     }
 
     public void launch(boolean red) {
-        ElapsedTime lineLookTime = new ElapsedTime();
-        if (red = true) {
-            encoderMoveUtil.backward(70, 0.5);
-
-            lineLookTime.reset();
-
-            while (lineLookTime.seconds() < 6) {
-                launchL.setPower(1);
-                launchR.setPower(-1);
-                while (lineLookTime.seconds() < 2) {
-                }
-                catcher.setPosition(1);
-            }
-            catcher.setPosition(0.5);
-            buttonbash.setPosition(1);
-            buttonbashR.setPosition(0);
-            encoderMoveUtil.turnGyroPrecise(30, 0.3);
-            encoderMoveUtil.backward(30, 0.5);
-            encoderMoveUtil.turnGyroPrecise(-45, 0.3);
-            encoderMoveUtil.backward(70, 0.5);
+        int color;
+        if (red) {
+            color=1;
         } else {
-            encoderMoveUtil.backward(70, 0.5);
-
-            lineLookTime.reset();
-
-            while (lineLookTime.seconds() < 6) {
-                launchL.setPower(1);
-                launchR.setPower(-1);
-                while (lineLookTime.seconds() < 2) {
-                }
-                catcher.setPosition(1);
-            }
-            catcher.setPosition(0.5);
-            buttonbash.setPosition(1);
-            buttonbashR.setPosition(0);
-            encoderMoveUtil.turnGyroPrecise(-30, 0.3);
-            encoderMoveUtil.backward(30, 0.5);
-            encoderMoveUtil.turnGyroPrecise(45, 0.3);
-            encoderMoveUtil.backward(70, 0.5);
+            color=-1;
         }
+        ElapsedTime lineLookTime = new ElapsedTime();
+        encoderMoveUtil.backward(75, 0.5);
+        lineLookTime.reset();
+        while (lineLookTime.seconds() < 6) {
+            launchL.setPower(1);
+            launchR.setPower(-1);
+            while (lineLookTime.seconds() < 2) {
+            }
+            catcher.setPosition(1);
+        }
+        catcher.setPosition(0.5);
+        buttonbash.setPosition(0.9);
+        buttonbashR.setPosition(0.2);
+        encoderMoveUtil.turnGyro(30*color, 0.2);
+        encoderMoveUtil.backward(25, 0.5);
+        encoderMoveUtil.turnGyro(-45*color, 0.2);
+        encoderMoveUtil.backward(40, 0.5);
     }
 
     public void launchUpper(boolean red) {
         ElapsedTime lineLookTime = new ElapsedTime();
-        if (red = true) {
-            encoderMoveUtil.backward(55, 0.5);
-            encoderMoveUtil.turnGyroPrecise(-35, 0.2);
-            encoderMoveUtil.backward(15, 0.5);
-            lineLookTime.reset();
-
-            while(lineLookTime.seconds()<6){
-                launchL.setPower(1);
-                launchR.setPower(-1);
-                while(lineLookTime.seconds()<2){}
-                catcher.setPosition(1);
-            }
-            catcher.setPosition(0.5);
-            encoderMoveUtil.backward(50,0.5);
-
+        int color;
+        if (red) {
+            color=1;
         } else {
-            encoderMoveUtil.backward(55, 0.5);
-            encoderMoveUtil.turnGyroPrecise(35, 0.2);
-            encoderMoveUtil.backward(15, 0.5);
-            lineLookTime.reset();
-
-            while(lineLookTime.seconds()<6){
-                launchL.setPower(1);
-                launchR.setPower(-1);
-                while(lineLookTime.seconds()<2){}
-                catcher.setPosition(1);
-            }
-            catcher.setPosition(0.5);
-            encoderMoveUtil.backward(50,0.5);
+            color=-1;
         }
+        encoderMoveUtil.backward(55, 0.5);
+        encoderMoveUtil.turnGyroPrecise(-35*color, 0.2);
+        encoderMoveUtil.backward(35, 0.5);
+        lineLookTime.reset();
+        while (lineLookTime.seconds() < 6) {
+            launchL.setPower(1);
+            launchR.setPower(-1);
+            while (lineLookTime.seconds() < 2) {
+            }
+            catcher.setPosition(1);
+        }
+        catcher.setPosition(0.5);
+        encoderMoveUtil.backward(50, 0.5);
     }
 }
