@@ -67,7 +67,7 @@ public class MasterThroneAutoRampRed extends LinearOpMode {
 
         //encoderMoveUtil= new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
         //        telemetry, sensorGyro);
-        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
-        AutonomousUtil.ramp(true);
+        //AutonomousUtil = new AutonomousUtil(catcherL, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
+        //AutonomousUtil.ramp(true);
     }
 }

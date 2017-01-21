@@ -61,10 +61,10 @@ public class MasterParkOnCenterAutoRed extends LinearOpMode {
         waitForStart();
         //encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
         //telemetry, sensorGyro);
-        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
+        //AutonomousUtil = new AutonomousUtil(catcherL, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
         /*
         buttonbash.setPosition(1);
-        catcher.setPosition(0);
+        catcherL.setPosition(0);
         ElapsedTime delay = new ElapsedTime();
         delay.reset();
         while(delay.time()<10){}
@@ -73,7 +73,7 @@ public class MasterParkOnCenterAutoRed extends LinearOpMode {
         encoderMoveUtil.turnGyro(30, 0.25); //aim at ball
         encoderMoveUtil.forward(60, 0.50); //hit ball
         */
-        AutonomousUtil.parkOnCenter(true);
+        //AutonomousUtil.parkOnCenter(true);
     }
 }
 

@@ -64,14 +64,18 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous
 public class MasterAutoBeaconBlue extends LinearOpMode {
     EncoderMoveUtil encoderMoveUtil;
+    AutonomousUtil AutonomousUtil;
 
     DcMotor motorFrontRight;
     DcMotor motorFrontLeft;
     DcMotor motorBackRight;
     DcMotor motorBackLeft;
+    DcMotor launchR;
+    DcMotor launchL;
     Servo buttonbashL;
     Servo buttonbashR;
-    Servo catcher;
+    Servo catcherL;
+    Servo catcherR;
 
     ModernRoboticsI2cGyro sensorGyro;
     ColorSensor colorSensor;
@@ -88,19 +92,22 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
         initMotors();
         buttonbashL = hardwareMap.servo.get("servo_3");
         buttonbashR = hardwareMap.servo.get("servo_4");
-        catcher = hardwareMap.servo.get("servo_1");
+        catcherL = hardwareMap.servo.get("servo_1");
+        catcherR = hardwareMap.servo.get("servo_2");
 
         lightSensor = hardwareMap.opticalDistanceSensor.get("light_sensor");
         sensorGyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
         rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "sensor_range");
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
+
         //lineSensor = hardwareMap.colorSensor.get("sensor_line");
         //lineSensor.setI2cAddress(new I2cAddr(0x3a));
 
 
         buttonbashL.setPosition(0);
         buttonbashR.setPosition(0.7);
-        catcher.setPosition(0.5);
+        catcherL.setPosition(0.5);
+        catcherR.setPosition(0.5);
         sensorGyro.calibrate();
         while (sensorGyro.isCalibrating()) {
             telemetry.addData("gyro sensor is calibrating", "0");
@@ -111,15 +118,36 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
 
         encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
                 telemetry, sensorGyro);
+        AutonomousUtil = new AutonomousUtil(catcherL, buttonbashL, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, launchR, launchL, buttonbashR, catcherR);
 
         colorSensor.enableLed(false);
         lightSensor.enableLed(true);
 
         waitForStart();
 
-        encoderMoveUtil.backward(65 - RBL, 0.3);
-        encoderMoveUtil.turnGyro(60, 0.15);
-        encoderMoveUtil.backward(85, 0.3);
+        //encoderMoveUtil.backward(18, 0.3);        //travel to shooting distance
+        encoderMoveUtil.backward(80, 0.3);
+        //launch particle code
+        lineLookTime.reset();
+        AutonomousUtil.launchL.setPower(1);
+        AutonomousUtil.launchR.setPower(-1);
+        while(lineLookTime.seconds()<= .5){}
+        catcherL.setPosition(1);
+        catcherR.setPosition(0);
+        while(lineLookTime.seconds()<= 2){}
+        AutonomousUtil.launchL.setPower(0);
+        AutonomousUtil.launchR.setPower(0);
+        catcherL.setPosition(.5);
+        catcherR.setPosition(.5);
+       // encoderMoveUtil.backward(30, 0.3);        //travel to middle of (3,2)
+        encoderMoveUtil.turnGyro(90, 0.2);
+        encoderMoveUtil.backward(60, 0.5);
+        int gyroturn2 = 45 - sensorGyro.getIntegratedZValue();
+        telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
+        telemetry.addData("GYROTURN", gyroturn2);
+        encoderMoveUtil.turnGyro(gyroturn2,0.2);
+        //encoderMoveUtil.turnGyro(60, 0.15);             //sets course to the line
+        //encoderMoveUtil.backward(85, 0.3);              //travels to line
         lineLookTime.reset();
 
         while (lightSensor.getLightDetected() < MATLIGHT && lineLookTime.seconds() < 10) {
@@ -130,20 +158,39 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
             motorFrontLeft.setPower(0.15);
             motorFrontRight.setPower(0.15);
         }
+        lineLookTime.reset();
+        encoderMoveUtil.forward(10,0.2);
+        /*
+        while (lightSensor.getLightDetected() < MATLIGHT+0.2 ) {
+            telemetry.addData("LIGHT", lightSensor.getLightDetected());
+            telemetry.update();
+            motorBackLeft.setPower(-0.1);
+            motorBackRight.setPower(-0.1);
+            motorFrontLeft.setPower(-0.1);
+            motorFrontRight.setPower(-0.1);
+        }
+        */
         telemetry.addData("LINE FOUND", 0);
         motorBackLeft.setPower(0);
         motorBackRight.setPower(0);
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
-        int gyroturn2 = 90 - sensorGyro.getIntegratedZValue();
+        buttonbashL.setPosition(1);
+        buttonbashR.setPosition(0.3);
+        gyroturn2 = 90 - sensorGyro.getIntegratedZValue();
         telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
         telemetry.addData("GYROTURN", gyroturn2);
-        encoderMoveUtil.turnGyro(gyroturn2,0.15);
-        while (rangeSensor.cmUltrasonic() < 30 && rangeSensor.cmUltrasonic() > 5) {// && rangeSensor.cmUltrasonic() < 100) {
-                motorFrontLeft.setPower(0.1);
-                motorFrontRight.setPower(-0.1);
-                motorBackLeft.setPower(0.1);
-                motorBackRight.setPower(-0.1);
+        encoderMoveUtil.turnGyro(gyroturn2,0.2);
+
+        gyroturn2 = 90 - sensorGyro.getIntegratedZValue();
+        telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
+        telemetry.addData("GYROTURN", gyroturn2);
+        encoderMoveUtil.turnGyroPrecise(gyroturn2,0.175);
+        while (rangeSensor.cmUltrasonic() < 30 && rangeSensor.cmUltrasonic() > 10) {// && rangeSensor.cmUltrasonic() < 100) {
+                motorFrontLeft.setPower(0.2);
+                motorFrontRight.setPower(0.2);
+                motorBackLeft.setPower(0.2);
+                motorBackRight.setPower(0.2);
             //if (lightSensor.getLightDetected() > MATLIGHT) {
             //    motorFrontLeft.setPower(0.5);
             //    motorFrontRight.setPower(-0.5);
@@ -196,6 +243,8 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
         motorBackRight = hardwareMap.dcMotor.get("motor_2");
         motorFrontLeft = hardwareMap.dcMotor.get("motor_3");
         motorBackLeft = hardwareMap.dcMotor.get("motor_4");
+        launchR = hardwareMap.dcMotor.get("motor_5");
+        launchL = hardwareMap.dcMotor.get("motor_6");
 
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);

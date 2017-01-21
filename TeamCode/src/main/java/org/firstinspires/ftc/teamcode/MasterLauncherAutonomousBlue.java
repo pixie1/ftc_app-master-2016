@@ -31,23 +31,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package org.firstinspires.ftc.teamcode;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.view.View;
-
-import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.robocol.TelemetryMessage;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -76,7 +68,8 @@ public class MasterLauncherAutonomousBlue extends LinearOpMode {
     AutonomousUtil AutonomousUtil;
     Servo buttonbashL;
     Servo buttonbashR;
-    Servo catcher;
+    Servo catcherL;
+    Servo catcherR;
     ColorSensor colorSensor;    // Hardware Device Object
     ColorSensor lineSensor;
     ModernRoboticsI2cRangeSensor rangeSensor;
@@ -92,7 +85,8 @@ public class MasterLauncherAutonomousBlue extends LinearOpMode {
 
         buttonbashL = hardwareMap.servo.get("servo_3");
         buttonbashR = hardwareMap.servo.get("servo_4");
-        catcher = hardwareMap.servo.get("servo_1");
+        catcherL = hardwareMap.servo.get("servo_1");
+        catcherR = hardwareMap.servo.get("servo_2");
         sensorGyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
         rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "sensor_range");
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
@@ -103,7 +97,8 @@ public class MasterLauncherAutonomousBlue extends LinearOpMode {
 
         buttonbashL.setPosition(0.1);
         buttonbashR.setPosition(0.8);
-        catcher.setPosition(0.5);
+        catcherL.setPosition(0.5);
+        catcherR.setPosition(0.5);
         sensorGyro.calibrate();
         while (sensorGyro.isCalibrating()) {
             telemetry.addData("gyro sensor is calibrating", "0");
@@ -114,7 +109,7 @@ public class MasterLauncherAutonomousBlue extends LinearOpMode {
 
         encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
                 telemetry, sensorGyro);
-        AutonomousUtil = new AutonomousUtil(catcher, buttonbashL, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, launchR, launchL, buttonbashR);
+        AutonomousUtil = new AutonomousUtil(catcherL, buttonbashL, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, launchR, launchL, buttonbashR, catcherR);
         colorSensor.enableLed(false);
         lineSensor.enableLed(true);
         waitForStart();
@@ -130,9 +125,9 @@ public class MasterLauncherAutonomousBlue extends LinearOpMode {
             launchR.setPower(-1);
             while (lineLookTime.seconds() < 2) {
             }
-            catcher.setPosition(1);
+            catcherL.setPosition(1);
         }
-        catcher.setPosition(0.5);
+        catcherL.setPosition(0.5);
         buttonbashL.setPosition(1);
         buttonbashR.setPosition(0);
         encoderMoveUtil.turnGyroPrecise(-30, 0.3);

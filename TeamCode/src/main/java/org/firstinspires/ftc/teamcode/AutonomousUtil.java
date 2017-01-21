@@ -4,8 +4,6 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -21,7 +19,8 @@ public class AutonomousUtil {
     DcMotor launchR;
 
 
-    Servo catcher;
+    Servo catcherL;
+    Servo catcherR;
     Servo buttonbash;
     Servo buttonbashR;
     ModernRoboticsI2cGyro sensorGyro;
@@ -33,7 +32,7 @@ public class AutonomousUtil {
     //motorBackLeft = hardwareMap.dcMotor.get("motor_4");
     //sensorGyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
 
-    //catcher = hardwareMap.servo.get("servo_1");
+    //catcherL = hardwareMap.servo.get("servo_1");
     //buttonbash = hardwareMap.servo.get("servo_2");
 
 
@@ -43,24 +42,25 @@ public class AutonomousUtil {
     final int GYRORAMP = 40; //Gyro constant for MasterThroneAutoRamp
     final int GYROLAUNCH = 40;
 
-    public AutonomousUtil(Servo catcher, Servo buttonbash, DcMotor motorFrontRight, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, Telemetry telemetry, ModernRoboticsI2cGyro sensorMRGyro, DcMotor launchR, DcMotor launchL, Servo buttonbashR) {
+    public AutonomousUtil(Servo catcherL, Servo buttonbash, DcMotor motorFrontRight, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, Telemetry telemetry, ModernRoboticsI2cGyro sensorMRGyro, DcMotor launchR, DcMotor launchL, Servo buttonbashR, Servo catcherR) {
         this.motorBackLeft = motorBackLeft;
         this.motorBackRight = motorBackRight;
         this.motorFrontLeft = motorFrontLeft;
         this.motorFrontRight = motorFrontRight;
         this.buttonbash = buttonbash;
-        this.catcher = catcher;
+        this.catcherL = catcherL;
         this.telemetry = telemetry;
         this.sensorGyro = sensorMRGyro;
         this.launchR = launchR;
         this.launchL = launchL;
         this.buttonbashR = buttonbashR;
+        this.catcherR = catcherR;
         encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro);
     }
 
     public void parkOnCenter(boolean red) {
         //buttonbash.setPosition(1);
-        catcher.setPosition(0.5);
+        catcherL.setPosition(0.5);
         ElapsedTime delay = new ElapsedTime();
         delay.reset();
         while (delay.time() < 10) {
@@ -77,7 +77,7 @@ public class AutonomousUtil {
 
     public void hitBall(boolean red) {
         //buttonbash.setPosition(1);
-        catcher.setPosition(0.5);
+        catcherL.setPosition(0.5);
         encoderMoveUtil.forward(100 - RBL, 0.25); //position robot
         if (red = true) {
             encoderMoveUtil.turnGyro(-GYROCENTER, 0.25);
@@ -109,16 +109,18 @@ public class AutonomousUtil {
             color=-1;
         }
         ElapsedTime lineLookTime = new ElapsedTime();
-        encoderMoveUtil.backward(75, 0.5);
+        encoderMoveUtil.backward(65, 0.5);
         lineLookTime.reset();
         while (lineLookTime.seconds() < 6) {
             launchL.setPower(1);
             launchR.setPower(-1);
             while (lineLookTime.seconds() < 2) {
             }
-            catcher.setPosition(1);
+            catcherL.setPosition(1);
+            catcherR.setPosition(0);
         }
-        catcher.setPosition(0.5);
+        catcherL.setPosition(0.5);
+        catcherR.setPosition(0.5);
         buttonbash.setPosition(0.9);
         buttonbashR.setPosition(0.2);
         encoderMoveUtil.turnGyro(30*color, 0.2);
@@ -144,9 +146,11 @@ public class AutonomousUtil {
             launchR.setPower(-1);
             while (lineLookTime.seconds() < 2) {
             }
-            catcher.setPosition(1);
+            catcherL.setPosition(1);
+            catcherR.setPosition(0);
         }
-        catcher.setPosition(0.5);
+        catcherL.setPosition(0.5);
+        catcherR.setPosition(0.5);
         encoderMoveUtil.backward(50, 0.5);
     }
 }

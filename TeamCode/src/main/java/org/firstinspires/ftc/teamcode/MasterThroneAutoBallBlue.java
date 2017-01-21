@@ -61,8 +61,8 @@ public class MasterThroneAutoBallBlue extends LinearOpMode {
         //        telemetry, sensorGyro);
 
         //Robot length: 26cm
-        AutonomousUtil = new AutonomousUtil(catcher, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
-        AutonomousUtil.hitBall(false);
+        //AutonomousUtil = new AutonomousUtil(catcherL, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
+        //AutonomousUtil.hitBall(false);
     }
 }
 

@@ -33,6 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -48,7 +49,7 @@ import org.firstinspires.ftc.robotcore.internal.TelemetryImpl;
 /**
  * A simple test of a pair  of motors
  */
-//@Autonomous
+@Autonomous
 public class autonomousTest extends LinearOpMode {
 
     DcMotor motorFrontRight;
@@ -57,6 +58,7 @@ public class autonomousTest extends LinearOpMode {
     DcMotor motorBackLeft;
 
     ModernRoboticsI2cGyro sensorGyro;
+    ModernRoboticsI2cRangeSensor rangeSensor;
     EncoderMoveUtil encoderMoveUtil;
     ElapsedTime eTime;
 
@@ -64,7 +66,7 @@ public class autonomousTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         int y = 666;
-        telemetry.addData("??!?!?!?!?!??!?!??!", y);
+        telemetry.addData("DAN IS A SATANIST", y);
         telemetry.update();
         final int RBL = 26; //robot length, to be used when against wall.
         motorFrontRight = hardwareMap.dcMotor.get("motor_1");
@@ -72,7 +74,7 @@ public class autonomousTest extends LinearOpMode {
         motorFrontLeft = hardwareMap.dcMotor.get("motor_3");
         motorBackLeft = hardwareMap.dcMotor.get("motor_4");
         sensorGyro = (ModernRoboticsI2cGyro)hardwareMap.gyroSensor.get("gyro");
-
+        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "sensor_range");
         motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -103,9 +105,8 @@ public class autonomousTest extends LinearOpMode {
 
 
         while (eTime.seconds() < 30) {
-            telemetry.addData("distance sensor", lightSensor.getLightDetected());
-            telemetry.addData("distance raw", lightSensor.getRawLightDetected());
-            telemetry.addData("distance raw max", lightSensor.getRawLightDetectedMax());
+            telemetry.addData("distance OpticalCM", rangeSensor.cmOptical());
+            telemetry.addData("distance UltrasoundCM", rangeSensor.cmUltrasonic());
             telemetry.update();
         }
 //        double speed=0.25;

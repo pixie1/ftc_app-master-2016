@@ -5,7 +5,6 @@
  import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  import com.qualcomm.robotcore.hardware.DcMotor;
  import com.qualcomm.robotcore.hardware.Servo;
- import com.qualcomm.robotcore.util.ElapsedTime;
 
 
  /**
@@ -21,7 +20,8 @@ public class MasterThroneTeleopNew extends OpMode {
     DcMotor launchR;
     DcMotor launchL;
 
-    Servo catcher;
+    Servo catcherL;
+     Servo catcherR;
     Servo buttonBasherL;
      Servo buttonBasherR;
 
@@ -40,7 +40,8 @@ public class MasterThroneTeleopNew extends OpMode {
         motorBackLeft = hardwareMap.dcMotor.get("motor_4");
         launchR = hardwareMap.dcMotor.get("motor_5");
         launchL = hardwareMap.dcMotor.get("motor_6");
-        catcher = hardwareMap.servo.get("servo_1");
+        catcherL = hardwareMap.servo.get("servo_1");
+        catcherR = hardwareMap.servo.get("servo_2");
         buttonBasherL = hardwareMap.servo.get("servo_3");
         buttonBasherR = hardwareMap.servo.get("servo_4");
         // pushl = hardwareMap.servo.get("servo_3");
@@ -52,7 +53,8 @@ public class MasterThroneTeleopNew extends OpMode {
         motorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         launchL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         launchR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        catcher.setPosition(.5);
+        catcherL.setPosition(.5);
+        catcherR.setPosition(.5);
         buttonBasherR.setPosition(0.8);
         buttonBasherL.setPosition(1);
     }
@@ -81,33 +83,36 @@ public class MasterThroneTeleopNew extends OpMode {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            catcher.setPosition(1);
-
+            catcherL.setPosition(1);
+            catcherR.setPosition(0);
         }
          if (gamepad2.y) {
              launchL.setPower(0);
              launchR.setPower(0);
-             catcher.setPosition(.3);
+             catcherL.setPosition(.3);
+             catcherR.setPosition(.7);
              //ButtonState = 1;
          }
          if (gamepad2.x) {
              launchL.setPower(0);
              launchR.setPower(0);
-             catcher.setPosition(1);
+             catcherL.setPosition(1);
+             catcherR.setPosition(0);
          }
          if(gamepad2.b) {
-             catcher.setPosition(.5);
+             catcherL.setPosition(.5);
+             catcherR.setPosition(.5);
              launchL.setPower(0);
              launchR.setPower(0);
          }
          if(gamepad2.dpad_up) {
-             buttonBasherL.setPosition(1);
+             buttonBasherL.setPosition(0.9);
          }
          if(gamepad2.dpad_down) {
-             buttonBasherL.setPosition(0);
+             buttonBasherL.setPosition(0.1);
          }
          if(gamepad2.dpad_left) {
-             buttonBasherR.setPosition(0.8 );
+             buttonBasherR.setPosition(0.8);
          }
          if(gamepad2.dpad_right) {
              buttonBasherR.setPosition(0.2);
