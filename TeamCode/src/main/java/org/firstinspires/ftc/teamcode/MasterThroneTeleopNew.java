@@ -57,20 +57,32 @@ public class MasterThroneTeleopNew extends OpMode {
         catcherR.setPosition(.5);
         buttonBasherR.setPosition(0.8);
         buttonBasherL.setPosition(1);
+
+
     }
      //int ButtonState = 0;
      //boolean toggleA = false;
      //boolean toggleDpadL = false;
      //boolean toggleDpadR = false;
      //boolean aPrevStat = false;
+     double n;
+     double m;
      @Override
     public void loop() {
         //Control method #2 Joysticks
          //boolean aCurr = gamepad2.a;
 
+        double l = gamepad1.left_stick_x + gamepad1.left_stick_y;
+         double r = gamepad1.right_stick_x + gamepad1.right_stick_y;
+         if(r>l){
+             n = ((gamepad1.right_stick_x + gamepad1.right_stick_y))*.2;
+             m = (-(gamepad1.right_stick_y - gamepad1.right_stick_x))*.2;
+         }else if(l>r){
+             n = ((gamepad1.left_stick_x + gamepad1.left_stick_y))/.8;
+             m = (-(gamepad1.left_stick_y - gamepad1.left_stick_x))/.8;
+         }
 
-        double n = ((gamepad1.left_stick_x + gamepad1.left_stick_y))/.8;
-        double m = (-(gamepad1.left_stick_y - gamepad1.left_stick_x))/.8;
+
         motorFrontRight.setPower(n);
         motorBackRight.setPower(n);
         motorFrontLeft.setPower(m);

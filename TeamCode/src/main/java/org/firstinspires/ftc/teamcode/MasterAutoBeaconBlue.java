@@ -150,7 +150,7 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
         //encoderMoveUtil.backward(85, 0.3);              //travels to line
         lineLookTime.reset();
 
-        while (lightSensor.getLightDetected() < MATLIGHT && lineLookTime.seconds() < 10) {
+        while (lightSensor.getLightDetected() < MATLIGHT && lineLookTime.seconds() < 5) {
             telemetry.addData("LIGHT", lightSensor.getLightDetected());
             telemetry.update();
             motorBackLeft.setPower(0.15);
@@ -181,23 +181,35 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
         telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
         telemetry.addData("GYROTURN", gyroturn2);
         encoderMoveUtil.turnGyro(gyroturn2,0.2);
-
         gyroturn2 = 90 - sensorGyro.getIntegratedZValue();
         telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
         telemetry.addData("GYROTURN", gyroturn2);
-        encoderMoveUtil.turnGyroPrecise(gyroturn2,0.175);
-        while (rangeSensor.cmUltrasonic() < 30 && rangeSensor.cmUltrasonic() > 10) {// && rangeSensor.cmUltrasonic() < 100) {
-            motorFrontLeft.setPower(0.2);
-            motorFrontRight.setPower(0.2);
-            motorBackLeft.setPower(0.2);
-            motorBackRight.setPower(0.2);
+        encoderMoveUtil.turnGyroPrecise(gyroturn2,0.160);
+        while (rangeSensor.cmUltrasonic() < 100 && rangeSensor.cmUltrasonic() > 20) {// && rangeSensor.cmUltrasonic() < 100) {
+            motorFrontLeft.setPower(0.15);
+            motorFrontRight.setPower(0.15);
+            motorBackLeft.setPower(0.15);
+            motorBackRight.setPower(0.15);
             telemetry.addData("DIST:", rangeSensor.cmUltrasonic());
             telemetry.update();
         }
-        motorFrontLeft.setPower(0);
-        motorFrontRight.setPower(0);
-        motorBackLeft.setPower(0);
-        motorBackRight.setPower(0);
+        telemetry.addData("BEACON REACHED","");
+        encoderMoveUtil.backward(2,0.14);
+        if (colorSensor.red() >= 1) {
+            telemetry.addData("RED", "");
+            buttonbashR.setPosition(0.7);
+            buttonbashL.setPosition(1);
+        }
+        if (colorSensor.blue() >= 1) {
+            telemetry.addData("BLUE", "");
+            buttonbashL.setPosition(0);
+            buttonbashR.setPosition(0.3);
+        }
+        encoderMoveUtil.backward(5,0.15);
+        //motorFrontLeft.setPower(0);
+        //motorFrontRight.setPower(0);
+        //motorBackLeft.setPower(0);
+        //motorBackRight.setPower(0);
     }
         /*
 //    encoderMoveUtil.turnGyro(10,0.5);
