@@ -187,21 +187,13 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
         telemetry.addData("GYROTURN", gyroturn2);
         encoderMoveUtil.turnGyroPrecise(gyroturn2,0.175);
         while (rangeSensor.cmUltrasonic() < 30 && rangeSensor.cmUltrasonic() > 10) {// && rangeSensor.cmUltrasonic() < 100) {
-                motorFrontLeft.setPower(0.2);
-                motorFrontRight.setPower(0.2);
-                motorBackLeft.setPower(0.2);
-                motorBackRight.setPower(0.2);
-            //if (lightSensor.getLightDetected() > MATLIGHT) {
-            //    motorFrontLeft.setPower(0.5);
-            //    motorFrontRight.setPower(-0.5);
-            //    motorBackLeft.setPower(0.5);
-            //    motorBackRight.setPower(-0.5);
-            //} else {ewqq11
-            //    motorFrontLeft.setPower(-0.5);
-            //    motorFrontRight.setPower(0.5);
-            //    motorBackLeft.setPower(-0.5);
-            //    motorBackRight.setPower(0.5);
-            }
+            motorFrontLeft.setPower(0.2);
+            motorFrontRight.setPower(0.2);
+            motorBackLeft.setPower(0.2);
+            motorBackRight.setPower(0.2);
+            telemetry.addData("DIST:", rangeSensor.cmUltrasonic());
+            telemetry.update();
+        }
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
         motorBackLeft.setPower(0);
