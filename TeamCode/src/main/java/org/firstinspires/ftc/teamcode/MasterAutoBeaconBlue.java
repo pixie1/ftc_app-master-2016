@@ -139,6 +139,7 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
         AutonomousUtil.launchR.setPower(0);
         catcherL.setPosition(.5);
         catcherR.setPosition(.5);
+        // Balls are launched, moving to next step
        // encoderMoveUtil.backward(30, 0.3);        //travel to middle of (3,2)
         encoderMoveUtil.turnGyro(90, 0.2);
         encoderMoveUtil.backward(60, 0.5);
@@ -158,8 +159,9 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
             motorFrontLeft.setPower(0.15);
             motorFrontRight.setPower(0.15);
         }
+        // Line detected, moving backward and turning to beacon
         lineLookTime.reset();
-        encoderMoveUtil.forward(10,0.2);
+        encoderMoveUtil.forward(12,0.2);
         /*
         while (lightSensor.getLightDetected() < MATLIGHT+0.2 ) {
             telemetry.addData("LIGHT", lightSensor.getLightDetected());
@@ -185,6 +187,7 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
         telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
         telemetry.addData("GYROTURN", gyroturn2);
         encoderMoveUtil.turnGyroPrecise(gyroturn2,0.160);
+        //Detect distance between robot & Beacon
         while (rangeSensor.cmUltrasonic() < 100 && rangeSensor.cmUltrasonic() > 20) {// && rangeSensor.cmUltrasonic() < 100) {
             motorFrontLeft.setPower(0.15);
             motorFrontRight.setPower(0.15);
@@ -194,18 +197,89 @@ public class MasterAutoBeaconBlue extends LinearOpMode {
             telemetry.update();
         }
         telemetry.addData("BEACON REACHED","");
-        encoderMoveUtil.backward(2,0.14);
+        buttonbashR.setPosition(0.7);
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        encoderMoveUtil.backward(5,0.15);//Move a bit forward
         if (colorSensor.red() >= 1) {
             telemetry.addData("RED", "");
-            buttonbashR.setPosition(0.7);
-            buttonbashL.setPosition(1);
+            buttonbashR.setPosition(0.3);
+            buttonbashL.setPosition(0);
         }
         if (colorSensor.blue() >= 1) {
             telemetry.addData("BLUE", "");
-            buttonbashL.setPosition(0);
-            buttonbashR.setPosition(0.3);
+            buttonbashL.setPosition(1);
+            buttonbashR.setPosition(0.8);
         }
-        encoderMoveUtil.backward(5,0.15);
+        encoderMoveUtil.forward(5,0.15);
+        encoderMoveUtil.backward(11,0.15);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        encoderMoveUtil.forward(30,0.15); //START BEACON #2
+        encoderMoveUtil.turnGyro(-90,0.3);
+        encoderMoveUtil.backward(60,0.3);
+        lineLookTime.reset();
+        while (lightSensor.getLightDetected() < MATLIGHT && lineLookTime.seconds() < 10) {
+            telemetry.addData("LIGHT", lightSensor.getLightDetected());
+            telemetry.update();
+            motorBackLeft.setPower(0.15);
+            motorBackRight.setPower(0.15);
+            motorFrontLeft.setPower(0.15);
+            motorFrontRight.setPower(0.15);
+        }
+        gyroturn2 = 90 - sensorGyro.getIntegratedZValue();
+        telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
+        telemetry.addData("GYROTURN", gyroturn2);
+        encoderMoveUtil.turnGyroPrecise(gyroturn2,0.3);
+        //Detect distance between robot & Beacon
+        while (rangeSensor.cmUltrasonic() < 100 && rangeSensor.cmUltrasonic() > 20) {// && rangeSensor.cmUltrasonic() < 100) {
+            motorFrontLeft.setPower(0.15);
+            motorFrontRight.setPower(0.15);
+            motorBackLeft.setPower(0.15);
+            motorBackRight.setPower(0.15);
+            telemetry.addData("DIST:", rangeSensor.cmUltrasonic());
+            telemetry.update();
+        }
+        telemetry.addData("BEACON REACHED","");
+        buttonbashR.setPosition(0.7);
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        encoderMoveUtil.backward(5,0.15);//Move a bit forward
+        if (colorSensor.red() >= 1) {
+            telemetry.addData("RED", "");
+            buttonbashR.setPosition(0.3);
+            buttonbashL.setPosition(0);
+        }
+        if (colorSensor.blue() >= 1) {
+            telemetry.addData("BLUE", "");
+            buttonbashL.setPosition(1);
+            buttonbashR.setPosition(0.8);
+        }
+        encoderMoveUtil.forward(5,0.15);
+        encoderMoveUtil.backward(10,0.15);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        encoderMoveUtil.forward(15,0.15);
         //motorFrontLeft.setPower(0);
         //motorFrontRight.setPower(0);
         //motorBackLeft.setPower(0);

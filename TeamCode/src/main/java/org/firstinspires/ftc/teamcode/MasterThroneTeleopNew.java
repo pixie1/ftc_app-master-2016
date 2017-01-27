@@ -67,20 +67,22 @@ public class MasterThroneTeleopNew extends OpMode {
      //boolean aPrevStat = false;
      double n;
      double m;
+     double l;
+     double r;
      @Override
     public void loop() {
         //Control method #2 Joysticks
          //boolean aCurr = gamepad2.a;
-
-        double l = gamepad1.left_stick_x + gamepad1.left_stick_y;
-         double r = gamepad1.right_stick_x + gamepad1.right_stick_y;
-         if(r>l){
+        /*
+         l = gamepad1.left_stick_x + gamepad1.left_stick_y;
+          r = gamepad1.right_stick_x + gamepad1.right_stick_y;
+         if(r!=0){
              n = ((gamepad1.right_stick_x + gamepad1.right_stick_y))*.2;
              m = (-(gamepad1.right_stick_y - gamepad1.right_stick_x))*.2;
-         }else if(l>r){
-             n = ((gamepad1.left_stick_x + gamepad1.left_stick_y))/.8;
+         } if(l!=0){
+         */    n = ((gamepad1.left_stick_x + gamepad1.left_stick_y))/.8;
              m = (-(gamepad1.left_stick_y - gamepad1.left_stick_x))/.8;
-         }
+         //}
 
 
         motorFrontRight.setPower(n);
@@ -95,8 +97,8 @@ public class MasterThroneTeleopNew extends OpMode {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            catcherL.setPosition(1);
-            catcherR.setPosition(0);
+            catcherL.setPosition(.8);
+            catcherR.setPosition(.2);
         }
          if (gamepad2.y) {
              launchL.setPower(0);
