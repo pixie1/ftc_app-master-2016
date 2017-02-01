@@ -61,9 +61,9 @@ public class MasterParkOnCenterAutoBlue extends LinearOpMode {
         waitForStart();
         //encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
                 //telemetry, sensorGyro);
-        //AutonomousUtil = new AutonomousUtil(catcherL, buttonbash, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
+        //AutonomousUtil = new AutonomousUtil(catcherL, buttonbashL, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, null, null, null);
         /*
-        buttonbash.setPosition(1);
+        buttonbashL.setPosition(1);
         catcherL.setPosition(0);
         ElapsedTime delay = new ElapsedTime();
         delay.reset();

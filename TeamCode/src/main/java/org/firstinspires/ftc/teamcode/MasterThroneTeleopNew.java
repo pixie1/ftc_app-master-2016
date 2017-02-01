@@ -5,11 +5,6 @@
  import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  import com.qualcomm.robotcore.hardware.DcMotor;
  import com.qualcomm.robotcore.hardware.Servo;
-
-
- /**
- * Created by Karine on 10/27/2015.
- */
 @TeleOp
 public class MasterThroneTeleopNew extends OpMode {
 
@@ -24,10 +19,6 @@ public class MasterThroneTeleopNew extends OpMode {
      Servo catcherR;
     Servo buttonBasherL;
      Servo buttonBasherR;
-
-    /**
-     * Constructor
-     */
     public MasterThroneTeleopNew() {
     }
 
@@ -73,16 +64,22 @@ public class MasterThroneTeleopNew extends OpMode {
     public void loop() {
         //Control method #2 Joysticks
          //boolean aCurr = gamepad2.a;
-        /*
-         l = gamepad1.left_stick_x + gamepad1.left_stick_y;
-          r = gamepad1.right_stick_x + gamepad1.right_stick_y;
-         if(r!=0){
+
+         l = Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y);
+          r = Math.abs(gamepad1.right_stick_x) + Math.abs(gamepad1.right_stick_y);
+         telemetry.addData("leftstick", l);
+         telemetry.addData("rightstick", r);
+         if(r>=l){
              n = ((gamepad1.right_stick_x + gamepad1.right_stick_y))*.2;
              m = (-(gamepad1.right_stick_y - gamepad1.right_stick_x))*.2;
-         } if(l!=0){
-         */    n = ((gamepad1.left_stick_x + gamepad1.left_stick_y))/.8;
+             telemetry.addData("n (rightspeed)", n);
+             telemetry.addData("m (leftspeed", m);
+         } if(l>r){
+            n = ((gamepad1.left_stick_x + gamepad1.left_stick_y))/.8;
              m = (-(gamepad1.left_stick_y - gamepad1.left_stick_x))/.8;
-         //}
+             telemetry.addData("n (rightspeed)", n);
+             telemetry.addData("m (leftspeed", m);
+         }
 
 
         motorFrontRight.setPower(n);
@@ -97,8 +94,8 @@ public class MasterThroneTeleopNew extends OpMode {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            catcherL.setPosition(.8);
-            catcherR.setPosition(.2);
+            catcherL.setPosition(.7);
+            catcherR.setPosition(.3);
         }
          if (gamepad2.y) {
              launchL.setPower(0);

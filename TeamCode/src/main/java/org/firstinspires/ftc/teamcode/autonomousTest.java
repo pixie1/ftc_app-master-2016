@@ -87,6 +87,13 @@ public class autonomousTest extends LinearOpMode {
 
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        sensorGyro.calibrate();
+        while (sensorGyro.isCalibrating()) {
+            telemetry.addData("gyro sensor is calibrating", "0");
+            telemetry.update();
+        }
+        telemetry.addData("Initialization done", "0");
+        telemetry.update();
 
         waitForStart();
         eTime = new ElapsedTime();
@@ -107,6 +114,7 @@ public class autonomousTest extends LinearOpMode {
         while (eTime.seconds() < 30) {
             telemetry.addData("distance OpticalCM", rangeSensor.cmOptical());
             telemetry.addData("distance UltrasoundCM", rangeSensor.cmUltrasonic());
+            telemetry.addData("Zval", sensorGyro.getIntegratedZValue());
             telemetry.update();
         }
 //        double speed=0.25;

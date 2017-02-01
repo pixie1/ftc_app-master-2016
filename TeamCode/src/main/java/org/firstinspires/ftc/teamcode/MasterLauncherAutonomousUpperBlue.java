@@ -108,7 +108,7 @@ public class MasterLauncherAutonomousUpperBlue extends LinearOpMode {
 
         encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
                 telemetry, sensorGyro);
-        AutonomousUtil = new AutonomousUtil(catcherL, buttonbashL, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, launchR, launchL, buttonbashR, catcherR);
+        AutonomousUtil = new AutonomousUtil(catcherL, buttonbashL, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, launchR, launchL, buttonbashR, catcherR, null, null, null);
         colorSensor.enableLed(false);
         lineSensor.enableLed(true);
         waitForStart();
