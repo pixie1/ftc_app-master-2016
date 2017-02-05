@@ -94,8 +94,8 @@ public class MasterThroneTeleopNew extends OpMode {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            catcherL.setPosition(.7);
-            catcherR.setPosition(.3);
+            catcherL.setPosition(1);
+            catcherR.setPosition(0 );
         }
          if (gamepad2.y) {
              launchL.setPower(0);

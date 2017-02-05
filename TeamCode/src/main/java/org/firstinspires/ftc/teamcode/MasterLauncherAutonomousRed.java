@@ -41,7 +41,7 @@ public class MasterLauncherAutonomousRed extends LinearOpMode {
         buttonbashL.setPosition(0.1);
         buttonbashR.setPosition(0.8);
         catcherL.setPosition(0.5);
-
+        catcherR.setPosition(0.5);
         sensorGyro.calibrate();
         while (sensorGyro.isCalibrating()) {
             telemetry.addData("gyro sensor is calibrating", "0");

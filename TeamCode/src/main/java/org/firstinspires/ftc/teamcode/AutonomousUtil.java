@@ -150,19 +150,19 @@ public class AutonomousUtil {
         }
         encoderMoveUtil.backward(55, 0.5);
         encoderMoveUtil.turnGyroPrecise(-35*color, 0.2);
-        encoderMoveUtil.backward(35, 0.5);
+        encoderMoveUtil.backward(15, 0.5);
         lineLookTime.reset();
-        while (lineLookTime.seconds() < 6) {
+        while (lineLookTime.seconds() < 3) {
             launchL.setPower(1);
             launchR.setPower(-1);
-            while (lineLookTime.seconds() < 2) {
+            while (lineLookTime.seconds() < 1) {
             }
             catcherL.setPosition(1);
             catcherR.setPosition(0);
         }
         catcherL.setPosition(0.5);
         catcherR.setPosition(0.5);
-        encoderMoveUtil.backward(50, 0.5);
+        encoderMoveUtil.backward(60, 0.7);
     }
     public void beaconRampEnd(boolean red) {
         int color;

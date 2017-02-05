@@ -26,22 +26,22 @@ public class MasterLauncherAutonomousUpperRed extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        final int LoopATime = 1000;
-        int LoopARep = 0;
-        final int RBL = 26;
-        ElapsedTime lineLookTime = new ElapsedTime();
+//        final int LoopATime = 1000;
+//        int LoopARep = 0;
+//        final int RBL = 26;
+//        ElapsedTime lineLookTime = new ElapsedTime();
 
-        initMotors();
+         initMotors();
 
         buttonbashL = hardwareMap.servo.get("servo_3");
         buttonbashR = hardwareMap.servo.get("servo_4");
         catcherL = hardwareMap.servo.get("servo_1");
         catcherR = hardwareMap.servo.get("servo_2");
         sensorGyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
-
         buttonbashL.setPosition(0.1);
         buttonbashR.setPosition(0.8);
         catcherL.setPosition(0.5);
+        catcherR.setPosition(0.5);
         sensorGyro.calibrate();
         while (sensorGyro.isCalibrating()) {
             telemetry.addData("gyro sensor is calibrating", "0");

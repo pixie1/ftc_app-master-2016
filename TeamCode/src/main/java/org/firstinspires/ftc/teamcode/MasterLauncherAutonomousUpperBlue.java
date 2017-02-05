@@ -88,16 +88,16 @@ public class MasterLauncherAutonomousUpperBlue extends LinearOpMode {
         catcherL = hardwareMap.servo.get("servo_1");
         catcherR = hardwareMap.servo.get("servo_2");
         sensorGyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
-        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "sensor_range");
-        colorSensor = hardwareMap.colorSensor.get("sensor_color");
-        lineSensor = hardwareMap.colorSensor.get("sensor_line");
+    //    rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "sensor_range");
+     //   colorSensor = hardwareMap.colorSensor.get("sensor_color");
+      //  lineSensor = hardwareMap.colorSensor.get("sensor_line");
 
-        lineSensor.setI2cAddress(new I2cAddr(0x3a));
-
+    //    lineSensor.setI2cAddress(new I2cAddr(0x3a));
 
         buttonbashL.setPosition(0.1);
         buttonbashR.setPosition(0.8);
         catcherL.setPosition(0.5);
+        catcherR.setPosition(0.5);
         sensorGyro.calibrate();
         while (sensorGyro.isCalibrating()) {
             telemetry.addData("gyro sensor is calibrating", "0");
@@ -109,8 +109,8 @@ public class MasterLauncherAutonomousUpperBlue extends LinearOpMode {
         encoderMoveUtil = new EncoderMoveUtil(motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft,
                 telemetry, sensorGyro);
         AutonomousUtil = new AutonomousUtil(catcherL, buttonbashL, motorFrontRight, motorBackLeft, motorBackRight, motorFrontLeft, telemetry, sensorGyro, launchR, launchL, buttonbashR, catcherR, null, null, null);
-        colorSensor.enableLed(false);
-        lineSensor.enableLed(true);
+       // colorSensor.enableLed(false);
+        //lineSensor.enableLed(true);
         waitForStart();
         AutonomousUtil.launchUpper(false);
         /*
