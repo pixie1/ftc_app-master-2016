@@ -193,7 +193,7 @@ public class AutonomousUtil {
     }
     public void beaconLauncher (boolean red) {
         ElapsedTime lineLookTime = new ElapsedTime();
-        encoderMoveUtil.backward(60, 0.3);
+        encoderMoveUtil.backward(45, 0.3);
         //launch particle code
         lineLookTime.reset();
         launchL.setPower(1);
@@ -206,6 +206,7 @@ public class AutonomousUtil {
         launchR.setPower(0);
         catcherL.setPosition(.5);
         catcherR.setPosition(.5);
+        encoderMoveUtil.backward(12, 0.3);
     }
     public void beacon(boolean red) {
         int gyroturn2;
@@ -272,11 +273,11 @@ public class AutonomousUtil {
         buttonbashR.setPosition(0.7);
         encoderMoveUtil.stopMotors();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        encoderMoveUtil.backward(5,0.15);//Move a bit forward
+        encoderMoveUtil.backward(rangeSensor.cmUltrasonic()-7,0.15);//Move a bit forward
         if (red) { //Based on autonomous, look for the correct colour and hit the right button
             if (colorSensor.red() >= 1) {
                 telemetry.addData("RED", "");
@@ -301,9 +302,9 @@ public class AutonomousUtil {
             }
         }
         encoderMoveUtil.forward(5,0.15);
-        encoderMoveUtil.backward(11,0.15); // Beacon has been hit, waiting then stopping
+        encoderMoveUtil.backward(rangeSensor.cmUltrasonic()+5,0.15); // Beacon has been hit, waiting then stopping
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
