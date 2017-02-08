@@ -183,4 +183,52 @@ public class EncoderMoveUtil {
         telemetry.addData("TurnDone",0);
         telemetry.update();
     }
+    public void turnGyroSloppy(int targetRelativeHeading, double speed){
+
+        int angleCurrent = sensorGyro.getIntegratedZValue();
+        int targetHeading=angleCurrent+targetRelativeHeading;
+        telemetry.addData("HeadingCurrent", angleCurrent);
+        telemetry.addData("Target", targetHeading);
+        telemetry.update();
+        boolean right = false;
+        boolean left= false;
+
+        while (sensorGyro.getIntegratedZValue()>targetHeading+5 || sensorGyro.getIntegratedZValue()<targetHeading-5){
+            if (sensorGyro.getIntegratedZValue()>targetHeading+5) {
+                if (right) {
+                    stopMotors();
+                    right = false;
+                    left = true;
+                }
+                motorBackLeft.setPower(speed);
+                motorBackRight.setPower(-speed);
+                motorFrontLeft.setPower(speed);
+                motorFrontRight.setPower(-speed);
+                telemetry.addData("HeadingCurrent", sensorGyro.getIntegratedZValue());
+                telemetry.addData("Target", targetRelativeHeading);
+                telemetry.update();
+            } else if (sensorGyro.getIntegratedZValue()<targetHeading-5){
+                if (left) {
+                    stopMotors();
+                    left=false;
+                    right=true;
+                }
+                motorBackLeft.setPower(-speed);
+                motorBackRight.setPower(speed);
+                motorFrontLeft.setPower(-speed);
+                motorFrontRight.setPower(speed);
+                telemetry.addData("HeadingCurrent", sensorGyro.getIntegratedZValue());
+                telemetry.addData("Target",targetRelativeHeading);
+                telemetry.update();
+            } else break;
+
+        }
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+
+        telemetry.addData("TurnDone",0);
+        telemetry.update();
+    }
 }

@@ -55,7 +55,7 @@ public class  FtcOpModeRegister implements OpModeRegister {
      *
      * If two or more op modes are registered with the same name, the app will display an error.
      */
-
+    manager.register("BeaconRedAccelerated", BeaconRedAccelerated.class);
     manager.register("MasterThroneTeleopNew", MasterThroneTeleopNew.class);
     manager.register("MasterLauncherAutonomousUpperBlue", MasterLauncherAutonomousUpperBlue.class);
     manager.register("MasterLauncherAutonomousUpperRed", MasterLauncherAutonomousUpperRed.class);

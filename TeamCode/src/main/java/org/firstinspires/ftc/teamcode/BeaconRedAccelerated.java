@@ -4,11 +4,15 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.*;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
-public class BeaconBlueAccelerated extends LinearOpMode {
+public class BeaconRedAccelerated extends LinearOpMode {
     EncoderMoveUtil encoderMoveUtil;
     AutonomousUtil AutonomousUtil;
 
@@ -66,7 +70,7 @@ public class BeaconBlueAccelerated extends LinearOpMode {
         lightSensor.enableLed(true);
 
         waitForStart();
-        AutonomousUtil.beaconAccel(false);
+        AutonomousUtil.beaconAccel(true);
     }
         /*
         //AutonomousUtil.beaconLauncher(false);

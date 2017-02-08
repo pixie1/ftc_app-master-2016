@@ -221,7 +221,7 @@ public class AutonomousUtil {
         encoderMoveUtil.turnGyro(-90*color, 0.2);
         encoderMoveUtil.backward(55, 0.5);
         if (red) {
-            gyroturn2 = 45 + sensorGyro.getIntegratedZValue();
+            gyroturn2 = -45 - sensorGyro.getIntegratedZValue();
         }else {
             gyroturn2 = 45 - sensorGyro.getIntegratedZValue();
         }
@@ -246,7 +246,7 @@ public class AutonomousUtil {
         buttonbashL.setPosition(1);
         buttonbashR.setPosition(0.3);
         if (red) {
-            gyroturn2 = 90 + sensorGyro.getIntegratedZValue();
+            gyroturn2 = -90 - sensorGyro.getIntegratedZValue();
         }else {
             gyroturn2 = 90 - sensorGyro.getIntegratedZValue();
         }
@@ -254,7 +254,7 @@ public class AutonomousUtil {
         telemetry.addData("GYROTURN", gyroturn2);
         encoderMoveUtil.turnGyro(gyroturn2,0.2);//TURNING AND FACING BEACON
         if (red) {
-            gyroturn2 = 90 + sensorGyro.getIntegratedZValue();
+            gyroturn2 = -90 - sensorGyro.getIntegratedZValue();
         }else {
             gyroturn2 = 90 - sensorGyro.getIntegratedZValue();
         }
@@ -308,5 +308,155 @@ public class AutonomousUtil {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    final double SPEED = 0.75; //Faster Speed Constant (Use on long straights)
+    final double SPEEDSLOW = 0.3; //Slower Speed Constant (Use on short straights)
+    final double TURNSPEED = 0.2; //Turning Speed Constant (Lower for precision, higher for speed)
+    final double LIGHTSPEED = 0.2; //Ultrasonic and Lightsensor Speed Constants
+    public void beaconAccel(boolean red) {
+        int color;
+        if (red) {
+            color = -1;
+        }else {
+            color = 1;
+        }
+        final double MATLIGHT = 0.7;
+        encoderMoveUtil.backward(45, SPEED);
+        ElapsedTime lineLookTime = new ElapsedTime();
+        lineLookTime.reset();
+        //launch particle code
+        lineLookTime.reset();
+        launchL.setPower(1);
+        launchR.setPower(-1);
+        while(lineLookTime.seconds()<= .5){}
+        catcherL.setPosition(1);
+        catcherR.setPosition(0);
+        while(lineLookTime.seconds()<= 2.5){}
+        launchL.setPower(0);
+        launchR.setPower(0);
+        catcherL.setPosition(.5);
+        catcherR.setPosition(.5);
+        encoderMoveUtil.backward(12, SPEED);
+        //encoderMoveUtil.backward(20, 0.3);
+        // Balls are launched, moving to next step
+        encoderMoveUtil.turnGyroSloppy((80*color)-sensorGyro.getIntegratedZValue(),TURNSPEED*1.5);//Turn to white line
+        encoderMoveUtil.turnGyroPrecise((90*color)-sensorGyro.getIntegratedZValue(),TURNSPEED);
+        encoderMoveUtil.backward(60, SPEED);
+        int gyroturn2 = (45*color) - sensorGyro.getIntegratedZValue();
+        encoderMoveUtil.turnGyroSloppy(gyroturn2,TURNSPEED*2);
+        gyroturn2 = (45*color) - sensorGyro.getIntegratedZValue();
+        telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
+        telemetry.addData("GYROTURN", gyroturn2);
+        encoderMoveUtil.turnGyro(gyroturn2,TURNSPEED); //TURNING TOWARDS LINE
+        encoderMoveUtil.backward(40, SPEED);
+        lineLookTime.reset();
+        //LOOKING FOR LINE
+        while (lightSensor.getLightDetected() < MATLIGHT && lineLookTime.seconds() < 5) {
+            telemetry.addData("LIGHT", lightSensor.getLightDetected());
+            telemetry.update();
+            motorBackLeft.setPower(LIGHTSPEED);
+            motorBackRight.setPower(LIGHTSPEED);
+            motorFrontLeft.setPower(LIGHTSPEED);
+            motorFrontRight.setPower(LIGHTSPEED);
+        }
+        // Line detected, moving backward and turning to beacon
+        lineLookTime.reset();
+        telemetry.addData("LINE FOUND", 0);
+        encoderMoveUtil.forward(10,SPEEDSLOW);
+        encoderMoveUtil.stopMotors();
+        buttonbashL.setPosition(1);
+        buttonbashR.setPosition(0.3);
+        gyroturn2 = (90*color) - sensorGyro.getIntegratedZValue();
+        telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
+        telemetry.addData("GYROTURN", gyroturn2);
+        encoderMoveUtil.turnGyroSloppy(gyroturn2,TURNSPEED*2);//TURNING AND FACING BEACON
+        gyroturn2 = (90*color) - sensorGyro.getIntegratedZValue();
+        telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
+        telemetry.addData("GYROTURN", gyroturn2);
+        encoderMoveUtil.turnGyroPrecise(gyroturn2,TURNSPEED);
+        beaconRunup(red);
+        encoderMoveUtil.forward(20,SPEEDSLOW);
+        buttonbashL.setPosition(1);
+        buttonbashR.setPosition(0.3);
+        //STARTING BEACON#2
+        gyroturn2=(10*color)-sensorGyro.getIntegratedZValue();
+        encoderMoveUtil.turnGyroSloppy(gyroturn2,TURNSPEED*2);//Turn to white line
+        encoderMoveUtil.turnGyroPrecise((0-sensorGyro.getIntegratedZValue()),TURNSPEED);
+        encoderMoveUtil.backward(80,SPEED);
+        lineLookTime.reset();
+        while (lightSensor.getLightDetected() < MATLIGHT && lineLookTime.seconds() < 5) {
+            telemetry.addData("LIGHT", lightSensor.getLightDetected());
+            telemetry.update();
+            motorBackLeft.setPower(LIGHTSPEED);
+            motorBackRight.setPower(LIGHTSPEED);
+            motorFrontLeft.setPower(LIGHTSPEED);
+            motorFrontRight.setPower(LIGHTSPEED);
+        }
+        encoderMoveUtil.forward(9,SPEEDSLOW);
+        gyroturn2 = (80*color) - sensorGyro.getIntegratedZValue();
+        encoderMoveUtil.turnGyroSloppy(gyroturn2,TURNSPEED*2);
+        telemetry.addData("Z VAL", sensorGyro.getIntegratedZValue());
+        telemetry.addData("GYROTURN", gyroturn2);
+        gyroturn2 = (90*color) - sensorGyro.getIntegratedZValue();
+        encoderMoveUtil.turnGyroPrecise(gyroturn2,TURNSPEED);//turning to face beacon
+        beaconRunup(red);
+        encoderMoveUtil.forward(50,SPEED);
+        encoderMoveUtil.turnGyro(132*color,0.5);
+        encoderMoveUtil.backward(120,0.8);
+    }
+    public void beaconRunup(boolean red) {
+        if (rangeSensor.cmUltrasonic() < 20){
+            encoderMoveUtil.forward(10,SPEEDSLOW);
+        }
+        while (rangeSensor.cmUltrasonic() < 100 && rangeSensor.cmUltrasonic() > 20) { //Run up to beacon
+            motorFrontLeft.setPower(LIGHTSPEED);
+            motorFrontRight.setPower(LIGHTSPEED);
+            motorBackLeft.setPower(LIGHTSPEED);
+            motorBackRight.setPower(LIGHTSPEED);
+            telemetry.addData("DIST:", rangeSensor.cmUltrasonic());
+            telemetry.update();
+        }
+        telemetry.addData("BEACON REACHED","");
+        encoderMoveUtil.stopMotors();
+        buttonbashR.setPosition(0.9);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        encoderMoveUtil.backward(rangeSensor.cmUltrasonic()-7,0.15);
+        if (red==true) { //Based on autonomous, look for the correct colour and hit the right button
+            if (colorSensor.red() >= 1) {
+                telemetry.addData("RED", "");
+                buttonbashR.setPosition(0.9);
+                buttonbashL.setPosition(1);
+            }
+            if (colorSensor.blue() >= 1) {
+                telemetry.addData("BLUE", "");
+                buttonbashL.setPosition(0);
+                buttonbashR.setPosition(0.2);
+            }
+        } else {
+            if (colorSensor.red() >= 1) {
+                telemetry.addData("RED", "");
+                buttonbashR.setPosition(0.2);
+                buttonbashL.setPosition(0);
+            }
+            if (colorSensor.blue() >= 1) {
+                telemetry.addData("BLUE", "");
+                buttonbashL.setPosition(1);
+                buttonbashR.setPosition(0.9);
+            }
+        }
+        telemetry.update();
+        encoderMoveUtil.forward(5,0.15);
+        encoderMoveUtil.backward(rangeSensor.cmUltrasonic()+5,0.15);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        encoderMoveUtil.backward(11,SPEEDSLOW); // Beacon has been hit, waiting then stopping
+
     }
 }
